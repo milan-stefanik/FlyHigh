@@ -1,16 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% if title %}
-        <title>FlyHigh Blog - {{ title }}</title>
-    {% else %}
-        <title>FlyHigh Blog</title>
-    {% endif %}
-</head>
-<body>
-    {% block content %}
-    {% endblock %}
-</body>
-</html>
+
+{% extends "base.html" %}
+{% set active_page = "home" %}
+{% block content %}
+    {% for post in posts %}
+        <article class="media">
+          <div class="media-body">
+            <div>
+              <a class="mr-2" href="#">{{ post.author }}</a>
+              <small class="text-muted">{{ post.date_posted }}</small>
+            </div>
+            <h2><a href="#">{{ post.title }}</a></h2>
+            <p >{{ post.content }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

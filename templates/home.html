@@ -1,9 +1,0 @@
-
-{% extends "index.html" %}
-{% block content %}
-    {% for post in posts %}
-        <h1>{{ post.title.title() }}</h1>
-        <p>By {{ post.author.title() }} on {{ post.date_posted.title() }}</p>
-        <p>{{ post.content.capitalize() }}</p>
-    {% endfor %}
-{% endblock content %}
