@@ -25,29 +25,43 @@
 
 <body>
 	<header class="site-header">
-		<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+		<nav class="navbar fixed-top navbar-expand-lg navbar-light">
 			<div class="container">
-				<a class="navbar-brand" href="{{url_for('index')}}"><span class="logo"><i class="fas fa-paper-plane"></i></span>
+				<a class="navbar-brand"
+					href="{{url_for('index')}}"><span class="logo"><i class="fas fa-paper-plane"></i></span>
 					FlyHigh</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-		                <span class="navbar-toggler-icon"></span>
-		            </button>
-		
+			                <span class="navbar-toggler-icon"></span>
+			            </button>
+	
 				<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
 					<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-						<li class="nav-item {{ 'active' if active_page == 'home' else '' }}">
-							<a class="nav-link" href="{{url_for('index')}}">Home</a>
+						<li class="nav-item">
+							<a class="nav-link {{ 'hvr-underline-from-left-active' if active_page == 'home' else 'hvr-underline-from-left' }}"
+								href="{{url_for('index')}}">Home</a>
 						</li>
-						<li class="nav-item {{ 'active' if active_page == 'about' else '' }}">
-							<a class="nav-link" href="{{url_for('about')}}">About</a>
+						<li class="nav-item">
+							<a class="nav-link {{ 'hvr-underline-from-left-active' if active_page == 'about' else 'hvr-underline-from-left' }}"
+								href="{{url_for('about')}}">About</a>
+						</li>
+                        <li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle nav-link hvr-underline-from-left" href="#" id="navbarDropdownMenuLink" role="button"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Posts
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+								<a class="dropdown-item nav-link" href="#"><span class="hvr-underline-from-left">Item1</span></a>
+								<a class="dropdown-item nav-link" href="#"><span class="hvr-underline-from-left">Item2</span></a>
+								<a class="dropdown-item nav-link" href="#"><span class="hvr-underline-from-left">Item3</span></a>
+							</div>
 						</li>
 					</ul>
 					<ul class="navbar-nav mt-2 mt-lg-0">
 						<li class="nav-item">
-							<a class="nav-link" href="#">Login</a>
+							<a class="nav-link hvr-underline-from-left" href="#">Login</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">Register</a>
+							<a class="nav-link hvr-underline-from-left" href="#">Register</a>
 						</li>
 					</ul>
 				</div>
@@ -57,20 +71,8 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-12">
           {% block content %}{% endblock %}
-        </div>
-        <div class="col-md-4">
-          <div>
-            <h3>Sidebar</h3>
-            <p>Additional information here</p>
-              <ul class="list-group">
-                <li class="list-group-item">Item1</li>
-                <li class="list-group-item">Item2</li>
-                <li class="list-group-item">Item3</li>
-                <li class="list-group-item">Item4</li>
-              </ul>
-          </div>
         </div>
       </div>
     </div>

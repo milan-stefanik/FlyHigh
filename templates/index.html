@@ -6,11 +6,11 @@
         <article class="media">
           <div class="media-body">
             <div>
-              <a class="mr-2" href="#">{{ post.author }}</a>
+              <a class="mr-2" href="#">{{ post.author.title() }}</a>
               <small class="text-muted">{{ post.date_posted }}</small>
             </div>
-            <h2><a href="#">{{ post.title }}</a></h2>
-            <p >{{ post.content }}</p>
+            <h2><a href="#">{{ post.title.title() }}</a></h2>
+            <p >{{ post.content.capitalize() }}</p>
           </div>
         </article>
     {% endfor %}

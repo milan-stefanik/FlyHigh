@@ -1,3 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800&display=swap');
+
 body {
+    font-family: 'Raleway', 'sans-serif';
     margin-top: 5rem;
+}
+
+.navbar {
+    background-color: white;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+.navbar-brand {
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.logo {
+    color: rgb(45,107,163);
+}
+
+.nav-item a {
+    font-family: 'Raleway', 'sans-serif' !important;
+    text-transform: uppercase !important;
+    color: black !important;
+}
+
+.brand {
+    width: 100%;
+}
+
+.navbar-toggler {
+    border: none !important;
+}
+
+
+/* -----------------------HOVER.CSS Library--------------------------- */
+/* Underline From Left */
+.hvr-underline-from-left {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  overflow: hidden;
+}
+.hvr-underline-from-left:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  background: black;
+  height: 2px;
+  -webkit-transition-property: right;
+  transition-property: right;
+  -webkit-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.hvr-underline-from-left:hover:before, .hvr-underline-from-left:focus:before {
+  right: 0;
+}
+
+.hvr-underline-from-left-active {
+    font-weight: 700;
 }
