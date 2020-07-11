@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <!-- Bootstrap CSS -->
-    <link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
+	<!-- Bootstrap CSS -->
+	<link type="text/css" rel="stylesheet"
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
 
-    <!-- Fontawesome -->
-    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.css" />
+	<!-- Fontawesome -->
+	<link type="text/css" rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.css" />
 
-    <!-- Custom CSS -->
-    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" />
+	<!-- Custom CSS -->
+	<link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" />
 
-    {% if title %}
-        <title>FlyHigh Blog - {{ title }}</title>
-    {% else %}
-        <title>FlyHigh Blog</title>
-    {% endif %}
+	{% if title %}
+	<title>FlyHigh Blog - {{ title }}</title>
+	{% else %}
+	<title>FlyHigh Blog</title>
+	{% endif %}
 
-    <!-- Favicon -->
-    <link href="static/img/favicon.png" rel="icon" />
+	<!-- Favicon -->
+	<link href="static/img/favicon.png" rel="icon" />
 </head>
 
 <body>
@@ -33,7 +36,7 @@
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
 			                <span class="navbar-toggler-icon"></span>
 			            </button>
-	
+
 				<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
 					<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 						<li class="nav-item">
@@ -44,15 +47,19 @@
 							<a class="nav-link {{ 'hvr-underline-from-left-active' if active_page == 'about' else 'hvr-underline-from-left' }}"
 								href="{{url_for('about')}}">About</a>
 						</li>
-                        <li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle nav-link hvr-underline-from-left" href="#" id="navbarDropdownMenuLink" role="button"
-								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle nav-link hvr-underline-from-left" href="#"
+								id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">
 								Posts
 							</a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-								<a class="dropdown-item nav-link" href="#"><span class="hvr-underline-from-left">Item1</span></a>
-								<a class="dropdown-item nav-link" href="#"><span class="hvr-underline-from-left">Item2</span></a>
-								<a class="dropdown-item nav-link" href="#"><span class="hvr-underline-from-left">Item3</span></a>
+								<a class="dropdown-item nav-link"
+									href="#"><span class="hvr-underline-from-left">Item1</span></a>
+								<a class="dropdown-item nav-link"
+									href="#"><span class="hvr-underline-from-left">Item2</span></a>
+								<a class="dropdown-item nav-link"
+									href="#"><span class="hvr-underline-from-left">Item3</span></a>
 							</div>
 						</li>
 					</ul>
@@ -69,18 +76,28 @@
 		</nav>
 	</header>
 
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          {% block content %}{% endblock %}
-        </div>
-      </div>
-    </div>
+	<div id="hero-image" class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-4">Aviation Blog</h1>
+            <hr>
+			<p class="lead">The latest news and opinions.</p>
+		</div>
+	</div>
 
-    <!-- Bootstrap JavaScript -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ></script>
-    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" ></script>
-           
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				{% block content %}{% endblock %}
+			</div>
+		</div>
+	</div>
+
+	<!-- Bootstrap JavaScript -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+	<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js">
+	</script>
+
 </body>
+
 </html>
