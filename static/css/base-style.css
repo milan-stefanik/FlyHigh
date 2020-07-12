@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
+
+/* -----------------------BODY--------------------------- */
+
+body {
+    font-family: 'Comfortaa', 'sans-serif';
+    margin-top: 5rem;
+}
+
+/* -----------------------NAVBAR--------------------------- */
+
+.navbar {
+    background-color: white;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.logo {
+    color: rgb(45,107,163);
+}
+
+.nav-item a {
+    font-family: 'Comfortaa', 'sans-serif' !important;
+    text-transform: uppercase !important;
+    color: black !important;
+}
+
+.brand {
+    width: 100%;
+}
+
+.navbar-toggler {
+    border: none !important;
+}
+
+
+#hero-image {
+ background: url('../img/hero-image.jpg') no-repeat center center;
+ background-size: cover;
+ 
+}
+
+#hero-image h1 {
+    color: white;
+    font-weight: 500;
+    text-shadow: 2px 2px rgb(9, 52, 90);
+}
+
+#hero-image p {
+    color: white;
+    font-weight: 300;
+}
+
+#hero-image hr {
+    background-color: white;
+    height: 1px;
+}

@@ -1,0 +1,58 @@
+/* ----------------------- List of posts formatting --------------------------- */
+.post {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 0.5rem;
+}
+
+.post h5 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.post h5 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.post p {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.post a {
+    color: rgb(45,107,163);
+}
+
+.post a:hover {
+    text-decoration: none;
+}
+
+.date-author-line {
+    font-size: 0.9rem;
+}
+
+
+.content {
+    display: -webkit-box;
+   -webkit-line-clamp: 3;
+   -webkit-box-orient: vertical;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
+.wrapper {
+  display: inline-block;
+  height: 100%;
+  width: auto;
+  vertical-align: middle;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.wrapper img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  display: table-cell;
+}
