@@ -4,7 +4,7 @@
 
 body {
     font-family: 'Comfortaa', 'sans-serif';
-    margin-top: 5rem;
+    margin-top: 4rem;
 }
 
 /* -----------------------NAVBAR--------------------------- */
@@ -37,10 +37,13 @@ body {
 }
 
 
+/* -----------------------NAVBAR--------------------------- */
+
 #hero-image {
  background: url('../img/hero-image.jpg') no-repeat center center;
  background-size: cover;
- 
+ margin-top: 0;
+ margin-bottom: 2rem;
 }
 
 #hero-image h1 {

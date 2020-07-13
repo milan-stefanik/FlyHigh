@@ -14,9 +14,9 @@
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.css" />
 
 	<!-- Custom CSS -->
-	<link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/hover-effect.css')}}" />
-    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/base-style.css')}}" />
-    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/index-style.css')}}" />
+	<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/hover-effect.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/base-style.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/index-style.css') }}" />
 
 	{% if title %}
 	<title>FlyHigh Blog - {{ title }}</title>
@@ -33,7 +33,7 @@
 		<nav class="navbar fixed-top navbar-expand-lg navbar-light">
 			<div class="container">
 				<a class="navbar-brand"
-					href="{{url_for('index')}}"><span class="logo"><i class="fas fa-paper-plane"></i></span>
+					href="{{ url_for('index') }}"><span class="logo"><i class="fas fa-paper-plane"></i></span>
 					FlyHigh</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
 			                <span class="navbar-toggler-icon"></span>
@@ -43,11 +43,11 @@
 					<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 						<li class="nav-item">
 							<a class="nav-link {{ 'hvr-underline-from-left-active' if active_page == 'home' else 'hvr-underline-from-left' }}"
-								href="{{url_for('index')}}">Home</a>
+								href="{{ url_for('index') }}">Home</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link {{ 'hvr-underline-from-left-active' if active_page == 'about' else 'hvr-underline-from-left' }}"
-								href="{{url_for('about')}}">About</a>
+								href="{{ url_for('about') }}">About</a>
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle nav-link hvr-underline-from-left" href="#"
@@ -67,10 +67,10 @@
 					</ul>
 					<ul class="navbar-nav mt-2 mt-lg-0">
 						<li class="nav-item">
-							<a class="nav-link hvr-underline-from-left" href="#">Login</a>
+							<a class="nav-link {{ 'hvr-underline-from-left-active' if active_page == 'login' else 'hvr-underline-from-left' }}" href="{{ url_for('login') }}">Login</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link hvr-underline-from-left" href="#">Register</a>
+							<a class="nav-link {{ 'hvr-underline-from-left-active' if active_page == 'register' else 'hvr-underline-from-left' }}" href="{{ url_for('register') }}">Register</a>
 						</li>
 					</ul>
 				</div>
@@ -89,7 +89,17 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
-				{% block content %}{% endblock %}
+				{% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                       {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                       {% endfor %} 
+                    
+                    {% endif %}
+                {% endwith %}
+                {% block content %}{% endblock %}
 			</div>
 		</div>
 	</div>
