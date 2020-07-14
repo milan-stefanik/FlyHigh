@@ -1,5 +1,7 @@
 env.py
 
+#following is generic GitHub template for .gitignore
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
