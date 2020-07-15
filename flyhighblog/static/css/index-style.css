@@ -1,4 +1,4 @@
-/* ----------------------- List of posts formatting --------------------------- */
+/* ----------------------- LIST OF POSTS --------------------------- */
 .post {
     margin-top: 2rem;
     margin-bottom: 2rem;
@@ -8,11 +8,7 @@
 .post h5 {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
-}
-
-.post h5 {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+    text-transform: uppercase;
 }
 
 .post p {
@@ -21,7 +17,7 @@
 }
 
 .post a {
-    color: rgb(45,107,163);
+    color: rgb(45,107,163) !important;
 }
 
 .post a:hover {
@@ -31,7 +27,6 @@
 .date-author-line {
     font-size: 0.9rem;
 }
-
 
 .content {
     display: -webkit-box;
