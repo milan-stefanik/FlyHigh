@@ -1,5 +1,5 @@
 # Importing required flask methods and functions
-from flask import render_template, redirect, url_for, flash, session
+from flask import render_template, redirect, url_for, flash, session, request
 # Importing Werkzeug Security Functions
 from werkzeug.security import generate_password_hash, check_password_hash
 # Importing Tools for working with MongoDB ObjectIds
@@ -73,9 +73,13 @@ def login():
                   '{}'.format(user['first_name'].title(),
                               user['last_name'].title()),
                   'success')
-            return redirect(url_for('index'))
+            next_page = request.args.get('next')
+            if next_page:
+                return redirect(url_for(next_page))
+            else:
+                return redirect(url_for('index'))
         else:
-            flash('Login Unsuccessful. Pleasche check email and password',
+            flash('Login Unsuccessful. Please check email and password.',
                   'danger')
     # Render login.html with respective login form
     return render_template('login.html', title='Login', form=form)
@@ -94,4 +98,5 @@ def account():
         return render_template('account.html', title='Account',
                                user=user)
     else:
-        return render_template('index.html', posts=mongo.db.posts.find())
+        flash('Please login to access this page.', 'info')
+        return redirect(url_for('login', next=request.endpoint))
