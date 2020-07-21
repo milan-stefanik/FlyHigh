@@ -4,10 +4,7 @@ import os
 from flask import Flask
 # Importing tools for interacting with MongoDB
 from flask_pymongo import PyMongo
-# Importing flask_bcrypt - flask hashing utility
-from flask_bcrypt import Bcrypt
-# Importing flask_login - flask user session management utility
-from flask_login import LoginManager
+
 
 # Importing system-based variables in development environment
 # env.py file contains secrets and must be included in .gitignore file
@@ -33,13 +30,6 @@ app.config['MONGO_URI'] = os.getenv('MONGO_URI')
 
 # Setting the PyMongo application object
 mongo = PyMongo(app)
-
-# Initialising Bcrypt
-bcrypt = Bcrypt(app)
-
-# Initialising LoginManager
-login_manager = LoginManager(app)
-
 
 # Importing routes.py from flyhighblog folder
 # Import is not on the top of file to avoid circular imports
