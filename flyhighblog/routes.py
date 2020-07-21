@@ -111,6 +111,8 @@ def login():
 def logout():
     # Removing 'user_id' from session
     session.pop('user_id', None)
+    # Defining flash message for logout
+    flash('You have been logged out.', 'info')
     # Redirecting to index.html
     return redirect(url_for('index'))
 
