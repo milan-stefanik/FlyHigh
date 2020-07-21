@@ -1,5 +1,5 @@
 # Importing required flask methods and functions
-from flask import render_template, redirect, url_for, flash, session, request
+from flask import render_template, redirect, url_for, flash, session
 # Importing Werkzeug Security Functions
 from werkzeug.security import generate_password_hash, check_password_hash
 # Importing Tools for working with MongoDB ObjectIds
@@ -27,6 +27,9 @@ def about():
 # Register route - form for registration of new users
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    # Checking if user is logged in
+    if 'user_id' in session:
+        return redirect(url_for('index'))
     # Defining form variable - Registration form
     form = RegistrationForm()
     # If form is validated successfuly, hash password,
@@ -53,6 +56,9 @@ def register():
 # Login route - form for user login and authentication
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # Checking if user is logged in
+    if 'user_id' in session:
+        return redirect(url_for('index'))
     # Defining form variable - Login form
     form = LoginForm()
     # Validate passed login information,
@@ -73,3 +79,19 @@ def login():
                   'danger')
     # Render login.html with respective login form
     return render_template('login.html', title='Login', form=form)
+
+
+@app.route("/logout")
+def logout():
+    session.pop('user_id', None)
+    return redirect(url_for('index'))
+
+
+@app.route("/account")
+def account():
+    if 'user_id' in session:
+        user = mongo.db.users.find_one({'_id':  ObjectId(session['user_id'])})
+        return render_template('account.html', title='Account',
+                               user=user)
+    else:
+        return render_template('index.html', posts=mongo.db.posts.find())
