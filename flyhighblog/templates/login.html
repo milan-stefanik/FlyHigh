@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+<!-- Defining variable for highlighting active links in navbar -->
 {% set active_page = "login" %}
 {% block content %}
     <div>
@@ -7,8 +8,11 @@
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Login</legend>
                 <div class = "form-group">
+                    <!-- Email input - label -->
                     {{ form.email.label(class="form-control-label") }}
+                    <!-- Checking if information passed by user is valid -->
                     {% if form.email.errors %}
+                        <!-- If information is invalid, provide user with corresponding feedback -->
                         {{ form.email(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
                             {% for error in form.email.errors %}
@@ -16,12 +20,16 @@
                             {% endfor %}
                         </div>
                     {% else %}
+                        <!-- If information is invalid, allow user to submit information -->
                         {{ form.email(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
                 <div class = "form-group">
+                    <!-- Password input - label -->
                     {{ form.password.label(class="form-control-label") }}
+                    <!-- Checking if information passed by user is valid -->
                     {% if form.password.errors %}
+                        <!-- If information is invalid, provide user with corresponding feedback -->
                         {{ form.password(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
                             {% for error in form.password.errors %}
@@ -29,18 +37,22 @@
                             {% endfor %}
                         </div>
                     {% else %}
+                        <!-- If information is invalid, allow user to submit information -->
                         {{ form.password(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
             </fieldset>
+            <!-- Login button -->
             <div class = "form-group">
                 {{ form.submit(class="btn btn-primary") }}
             </div>
+            <!-- Forgotten password link -->
             <small class="test-muted">
                 <a href="#">Forgot Password?</a>
             </small>
         </form>
     </div>
+    <!-- Link to register for non-registered users -->
     <div class="border-top pt-3">
         <small class="text-muted">
             Do you need an account? <a class="ml-2" href="{{ url_for('register') }}">Register</a>

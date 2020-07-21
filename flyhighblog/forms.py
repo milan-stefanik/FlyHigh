@@ -1,4 +1,4 @@
-# Importing form validation and rendering library integrated fo Flask
+# Importing form validation and rendering library integrated in Flask
 from flask_wtf import FlaskForm
 # Importing required field types
 from wtforms import StringField, PasswordField, SubmitField

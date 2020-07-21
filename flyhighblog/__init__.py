@@ -11,7 +11,7 @@ from flask_pymongo import PyMongo
 # When in development environment, env.py file needs
 #   to be uploaded to root folder.
 # When deployed, env.py is not present and application
-#   gets data directly from system-based variebles
+#   gets data directly from system-based variables
 from os import path
 if path.exists('env.py'):
     import env
