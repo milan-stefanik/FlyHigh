@@ -5,7 +5,7 @@
 body {
   font-family: "Comfortaa", "sans-serif";
   margin-top: 3.2rem;
-  background-image: linear-gradient(rgb(255, 255, 255), rgb(200, 200, 200));
+  background-image: linear-gradient(rgb(255, 255, 255), rgb(160, 160, 160));
   min-height: 100vh;
 }
 
@@ -29,14 +29,6 @@ body {
   font-family: "Comfortaa", "sans-serif" !important;
   text-transform: uppercase !important;
   font-size: 1rem !important;
-}
-
-.nav-item a:hover {
-  color: rgb(131, 148, 188) !important;
-}
-
-.nav-link-custom {
-  color: rgb(255,255,255);
 }
 
 .brand {

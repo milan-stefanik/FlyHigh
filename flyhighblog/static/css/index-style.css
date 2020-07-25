@@ -2,6 +2,8 @@
 .post {
   margin-top: 2rem;
   margin-bottom: 2rem;
+  margin-right: 1rem;
+  margin-left: 1rem;
   padding: 1rem;
   background-color: rgb(255, 255, 255);
   border: 1px solid rgb(200, 200, 200);
