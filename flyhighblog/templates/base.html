@@ -32,7 +32,7 @@
 <body>
     <!-- Header with Navbar -->
 	<header class="site-header">
-		<nav class="navbar fixed-top navbar-expand-lg navbar-light">
+		<nav class="navbar fixed-top navbar-expand-lg">
 			<div class="container">
 				<a class="navbar-brand"
 					href="{{ url_for('index') }}"><span class="logo"><i class="fas fa-paper-plane"></i></span>
@@ -44,44 +44,29 @@
 				<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
 					<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 						<li class="nav-item">
-							<a class="nav-link {{ 'hvr-underline-from-left-active' if active_page == 'home' else 'hvr-underline-from-left' }}"
+							<a class="nav-link nav-link-custom {{ 'hvr-underline-from-left-active' if active_page == 'home' else 'hvr-underline-from-left' }}"
 								href="{{ url_for('index') }}">Home</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link {{ 'hvr-underline-from-left-active' if active_page == 'about' else 'hvr-underline-from-left' }}"
+							<a class="nav-link nav-link-custom {{ 'hvr-underline-from-left-active' if active_page == 'about' else 'hvr-underline-from-left' }}"
 								href="{{ url_for('about') }}">About</a>
-						</li>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle nav-link hvr-underline-from-left" href="#"
-								id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false">
-								Posts
-							</a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-								<a class="dropdown-item nav-link"
-									href="#"><span class="hvr-underline-from-left">Item1</span></a>
-								<a class="dropdown-item nav-link"
-									href="#"><span class="hvr-underline-from-left">Item2</span></a>
-								<a class="dropdown-item nav-link"
-									href="#"><span class="hvr-underline-from-left">Item3</span></a>
-							</div>
 						</li>
 					</ul>
 					<ul class="navbar-nav mt-2 mt-lg-0">
 						<!-- Displaying links corresponding to user status (authenticated/logged out) -->
                         {% if 'user_id' in session %}
                             <li class="nav-item">
-                                <a class="nav-link {{ 'hvr-underline-from-left-active' if active_page == 'account' else 'hvr-underline-from-left' }}" href="{{ url_for('account') }}">Account</a>
+                                <a class="nav-link nav-link-custom {{ 'hvr-underline-from-left-active' if active_page == 'account' else 'hvr-underline-from-left' }}" href="{{ url_for('account') }}">Account</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ 'hvr-underline-from-left' }}" href="{{ url_for('logout') }}">Logout</a>
+                                <a class="nav-link nav-link-custom {{ 'hvr-underline-from-left' }}" href="{{ url_for('logout') }}">Logout</a>
                             </li>
                         {% else %}
                             <li class="nav-item">
-                                <a class="nav-link {{ 'hvr-underline-from-left-active' if active_page == 'login' else 'hvr-underline-from-left' }}" href="{{ url_for('login') }}">Login</a>
+                                <a class="nav-link nav-link-custom {{ 'hvr-underline-from-left-active' if active_page == 'login' else 'hvr-underline-from-left' }}" href="{{ url_for('login') }}">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ 'hvr-underline-from-left-active' if active_page == 'register' else 'hvr-underline-from-left' }}" href="{{ url_for('register') }}">Register</a>
+                                <a class="nav-link nav-link-custom {{ 'hvr-underline-from-left-active' if active_page == 'register' else 'hvr-underline-from-left' }}" href="{{ url_for('register') }}">Register</a>
                             </li>
                         {% endif %}
 					</ul>
@@ -99,6 +84,7 @@
 		</div>
 	</div>
 
+    <!-- Main Content -->
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
@@ -118,6 +104,89 @@
 			</div>
 		</div>
 	</div>
+
+      <!-- ======= Footer ======= -->
+  <footer>
+    <div class="footer-area">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="footer-content">
+              <div class="footer-head">
+                <div class="footer-logo">
+                  <h2><span><i class="fas fa-paper-plane"></i></span> FlyHigh</h2>
+                </div>
+
+                <p>Aviation blog for enthusiasts and professionals.</p> 
+                <p>The latest news and opinions.</p>
+                <div class="footer-icons">
+                  <ul>
+                    <li>
+                      <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li>
+                      <a href="https://twitter.com/"><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li>
+                      <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                    </li>
+                    <li>
+                      <a href="https://www.pinterest.com/"><i class="fab fa-pinterest-p"></i></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end single footer -->
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="footer-content">
+              <div class="footer-head">
+                <h4>Contact</h4>
+                <p>FlyHigh.com<br>
+                Navigational 787<br>
+                155 00  Prague 5<br>
+                Czech Republic</p>
+                <br>
+                <p>Email: info@flyhigh.com</p>
+                
+              </div>
+            </div>
+          </div>
+          <!-- end single footer -->
+          <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="footer-content">
+              <div class="footer-head">
+                <h4>Flicker</h4>
+                <div class="flicker-img">
+                  <a href="https://www.flickr.com/"><img src="{{ url_for('static', filename='img/flicker/1.jpg') }}" alt=""></a>
+                  <a href="https://www.flickr.com/"><img src="{{ url_for('static', filename='img/flicker/2.jpg') }}" alt=""></a>
+                  <a href="https://www.flickr.com/"><img src="{{ url_for('static', filename='img/flicker/3.jpg') }}" alt=""></a>
+                  <a href="https://www.flickr.com/"><img src="{{ url_for('static', filename='img/flicker/4.jpg') }}" alt=""></a>
+                  <a href="https://www.flickr.com/"><img src="{{ url_for('static', filename='img/flicker/5.jpg') }}" alt=""></a>
+                  <a href="https://www.flickr.com/"><img src="{{ url_for('static', filename='img/flicker/6.jpg') }}" alt=""></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-area-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="copyright text-center">
+              <p>
+                &copy; Copyright <span><i class="fas fa-paper-plane"></i></span> FlyHigh. All Rights Reserved
+              </p>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer><!-- End  Footer -->
 
 	<!-- Bootstrap JavaScript -->
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

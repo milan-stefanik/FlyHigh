@@ -1,39 +1,53 @@
 /* ----------------------- LIST OF POSTS --------------------------- */
 .post {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    padding: 0.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(200, 200, 200);
+  border-radius: 5px;
 }
 
 .post h5 {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  text-transform: uppercase;
 }
 
 .post p {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
 }
 
 .post a {
-    color: rgb(45,107,163) !important;
+  color: rgb(100,100,100) !important;
+}
+
+.post hr {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .post a:hover {
-    text-decoration: none;
+  text-decoration: none;
+  color: #17a2b8 !important;
 }
 
 .date-author-line {
-    font-size: 0.9rem;
+  font-size: 0.9rem;
 }
 
 .content {
-    display: -webkit-box;
-   -webkit-line-clamp: 3;
-   -webkit-box-orient: vertical;
-   overflow: hidden;
-   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: justify;
+}
+
+.post button {
+    margin-top: 1rem;
 }
 
 .wrapper {
