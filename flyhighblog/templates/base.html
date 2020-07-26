@@ -17,6 +17,7 @@
 	<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/hover-effect.css') }}" />
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/base-style.css') }}" />
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/index-style.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/form-style.css') }}" />
 
     <!-- Dynamic page title -->
 	{% if title %}
@@ -32,7 +33,7 @@
 <body>
     <!-- Header with Navbar -->
 	<header class="site-header">
-		<nav class="navbar fixed-top navbar-expand-lg bg-dark navbar-dark">
+		<nav class="navbar fixed-top navbar-expand-lg navbar-dark">
 			<div class="container">
 				<a class="navbar-brand"
 					href="{{ url_for('index') }}"><span class="logo"><i class="fas fa-paper-plane"></i></span>

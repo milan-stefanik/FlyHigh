@@ -17,7 +17,7 @@
   left: 0;
   right: 100%;
   bottom: 0;
-  background: rgb(131,148,188);
+  background:rgb(255,255,255);
   height: 2px;
   -webkit-transition-property: right;
   transition-property: right;
@@ -31,6 +31,5 @@
 }
 
 .hvr-underline-from-left-active {
-    color: rgb(131,148,188) !important;
     font-weight: 700 !important;
 }

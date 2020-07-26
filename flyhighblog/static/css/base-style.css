@@ -12,7 +12,7 @@ body {
 /* -----------------------NAVBAR--------------------------- */
 
 .navbar {
-  background-color: rgb(50, 50, 50);
+  background-color: rgb(100, 100, 100);
 }
 
 .navbar-brand {
@@ -71,7 +71,7 @@ body {
 /* ---------------------------- Footer ------------------------------- */
 .footer-area {
   padding: 1rem 0;
-  background: rgb(50, 50, 50);
+  background: rgb(100, 100, 100);
 }
 
 .footer-head h4 {
@@ -123,8 +123,8 @@ body {
 }
 
 .footer-icons ul li a:hover {
-  background: rgb(131, 148, 188);
-  border: 1px solid rgb(131, 148, 188);
+  background: rgb(150,150,150);
+  border: 1px solid rgb(150,150,150);
   color: #fff;
 }
 

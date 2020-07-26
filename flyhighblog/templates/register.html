@@ -2,125 +2,127 @@
 <!-- Defining variable for highlighting active links in navbar -->
 {% set active_page = "register" %}
 {% block content %}
-    <div>
-        <form method="POST" action="" novalidate>
-            {{ form.hidden_tag() }}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Register</legend>
-                <div class = "form-group">
-                    <!-- First name input - label -->
-                    {{ form.firstname.label(class="form-control-label") }}
-                    <!-- Checking if information passed by user is valid -->
-                    {% if form.firstname.errors %}
-                        <!-- If information is invalid, provide user with corresponding feedback -->
-                        {{ form.firstname(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.firstname.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        <!-- If information is invalid, allow user to submit information -->
-                        {{ form.firstname(class="form-control form-control-lg") }}
-                    {% endif %}
+<div class="form-container">
+	<div>
+		<form method="POST" action="" novalidate>
+			{{ form.hidden_tag() }}
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">Register</legend>
+				<div class="form-group">
+					<!-- First name input - label -->
+					{{ form.firstname.label(class="form-control-label") }}
+					<!-- Checking if information passed by user is valid -->
+					{% if form.firstname.errors %}
+					<!-- If information is invalid, provide user with corresponding feedback -->
+					{{ form.firstname(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in form.firstname.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+					<!-- If information is invalid, allow user to submit information -->
+					{{ form.firstname(class="form-control form-control-lg") }}
+					{% endif %}
 
-                </div>
-                <div class = "form-group">
-                    <!-- Last name input - label -->
-                    {{ form.lastname.label(class="form-control-label") }}
-                    <!-- Checking if information passed by user is valid -->
-                    {% if form.lastname.errors %}
-                        <!-- If information is invalid, provide user with corresponding feedback -->
-                        {{ form.lastname(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.lastname.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        <!-- If information is invalid, allow user to submit information -->
-                        {{ form.lastname(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class = "form-group">
-                    <!-- Username input - label -->
-                    {{ form.username.label(class="form-control-label") }}
-                    <!-- Checking if information passed by user is valid -->
-                    {% if form.username.errors %}
-                        <!-- If information is invalid, provide user with corresponding feedback -->
-                        {{ form.username(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.username.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        <!-- If information is invalid, allow user to submit information -->
-                        {{ form.username(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class = "form-group">
-                    <!-- Email input - label -->
-                    {{ form.email.label(class="form-control-label") }}
-                    <!-- Checking if information passed by user is valid -->
-                    {% if form.email.errors %}
-                        <!-- If information is invalid, provide user with corresponding feedback -->
-                        {{ form.email(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.email.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        <!-- If information is invalid, allow user to submit information -->
-                        {{ form.email(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class = "form-group">
-                    <!-- Password input - label -->
-                    {{ form.password.label(class="form-control-label") }}
-                    <!-- Checking if information passed by user is valid -->
-                    {% if form.password.errors %}
-                        <!-- If information is invalid, provide user with corresponding feedback -->
-                        {{ form.password(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.password.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        <!-- If information is invalid, allow user to submit information -->
-                        {{ form.password(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                <div class = "form-group">
-                    <!-- Confirm password input - label -->
-                    {{ form.confirm_password.label(class="form-control-label") }}
-                    <!-- Checking if information passed by user is valid -->
-                    {% if form.confirm_password.errors %}
-                        <!-- If information is invalid, provide user with corresponding feedback -->
-                        {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.confirm_password.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        <!-- If information is invalid, allow user to submit information -->
-                        {{ form.confirm_password(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-            </fieldset>
-            <!-- Sign up button -->
-            <div class = "form-group">
-                {{ form.submit(class="btn btn-info") }}
-            </div>
-        </form>
-    </div>
-    <!-- Link to login for registered users -->
-    <div class="border-top pt-3">
-        <small class="text-muted">
+				</div>
+				<div class="form-group">
+					<!-- Last name input - label -->
+					{{ form.lastname.label(class="form-control-label") }}
+					<!-- Checking if information passed by user is valid -->
+					{% if form.lastname.errors %}
+					<!-- If information is invalid, provide user with corresponding feedback -->
+					{{ form.lastname(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in form.lastname.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+					<!-- If information is invalid, allow user to submit information -->
+					{{ form.lastname(class="form-control form-control-lg") }}
+					{% endif %}
+				</div>
+				<div class="form-group">
+					<!-- Username input - label -->
+					{{ form.username.label(class="form-control-label") }}
+					<!-- Checking if information passed by user is valid -->
+					{% if form.username.errors %}
+					<!-- If information is invalid, provide user with corresponding feedback -->
+					{{ form.username(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in form.username.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+					<!-- If information is invalid, allow user to submit information -->
+					{{ form.username(class="form-control form-control-lg") }}
+					{% endif %}
+				</div>
+				<div class="form-group">
+					<!-- Email input - label -->
+					{{ form.email.label(class="form-control-label") }}
+					<!-- Checking if information passed by user is valid -->
+					{% if form.email.errors %}
+					<!-- If information is invalid, provide user with corresponding feedback -->
+					{{ form.email(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in form.email.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+					<!-- If information is invalid, allow user to submit information -->
+					{{ form.email(class="form-control form-control-lg") }}
+					{% endif %}
+				</div>
+				<div class="form-group">
+					<!-- Password input - label -->
+					{{ form.password.label(class="form-control-label") }}
+					<!-- Checking if information passed by user is valid -->
+					{% if form.password.errors %}
+					<!-- If information is invalid, provide user with corresponding feedback -->
+					{{ form.password(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in form.password.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+					<!-- If information is invalid, allow user to submit information -->
+					{{ form.password(class="form-control form-control-lg") }}
+					{% endif %}
+				</div>
+				<div class="form-group">
+					<!-- Confirm password input - label -->
+					{{ form.confirm_password.label(class="form-control-label") }}
+					<!-- Checking if information passed by user is valid -->
+					{% if form.confirm_password.errors %}
+					<!-- If information is invalid, provide user with corresponding feedback -->
+					{{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in form.confirm_password.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+					<!-- If information is invalid, allow user to submit information -->
+					{{ form.confirm_password(class="form-control form-control-lg") }}
+					{% endif %}
+				</div>
+			</fieldset>
+			<!-- Sign up button -->
+			<div class="form-group">
+				{{ form.submit(class="btn btn-outline-secondary") }}
+			</div>
+		</form>
+	</div>
+	<!-- Link to login for registered users -->
+	<div class="border-top pt-3">
+		<small class="text-muted">
             Already have an account? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
         </small>
-    </div>
+	</div>
+</div>
 {% endblock content %}
