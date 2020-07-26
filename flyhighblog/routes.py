@@ -153,6 +153,7 @@ def account():
                 profile_image = form.picture.data
                 _, f_ext = os.path.splitext(profile_image.filename)
                 picture_fn = random_hex + f_ext
+                # Set temporary path for profile pictures
                 picture_path = os.path.join(app.root_path,
                                             'static/img/profile-image',
                                             picture_fn)
@@ -160,10 +161,14 @@ def account():
                 output_size = (125, 125)
                 i = Image.open(profile_image)
                 i.thumbnail(output_size)
+                # Saving resized image to temporary folder
                 i.save(picture_path)
-                # Save file to the database
+                # Open saved resized picture for read mode (r)
+                #   with binary I/O (b)
                 with open(picture_path, 'rb') as f:
+                    # Save resized picture to database
                     mongo.save_file(picture_fn, f)
+                # Delete resized picture from temporaty folder
                 os.remove(picture_path)
                 # Save file name reference to user document
                 users.update({'_id': ObjectId(session['user_id'])},
