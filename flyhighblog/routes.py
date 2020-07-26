@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from bson.objectid import ObjectId
 # Importing variables from other application packages
 from flyhighblog import app, mongo
-from flyhighblog.forms import RegistrationForm, LoginForm
+from flyhighblog.forms import RegistrationForm, LoginForm, UpdateAccountForm
 
 
 # Index route - listing all posts
@@ -47,7 +47,7 @@ def register():
         user_doc = {
                     'first_name': form.firstname.data.lower(),
                     'last_name': form.lastname.data.lower(),
-                    'username': form.username.data.lower(),
+                    'username': form.username.data,
                     'email': form.email.data.lower(),
                     'password': hashpass,
                     }
@@ -117,18 +117,50 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route("/account")
+@app.route("/account", methods=['GET', 'POST'])
 def account():
     # If user is logged in (i.e. 'user_id' is in session),
     #  allow access to account.html and display corresponding
     #  account information
     if 'user_id' in session:
-        user = mongo.db.users.find_one({'_id':  ObjectId(session['user_id'])})
+        # Defining form variable - UpdateAccountForm
+        form = UpdateAccountForm()
+        user = mongo.db.users.find_one({'_id': ObjectId(session['user_id'])})
+        users = mongo.db.users
+        if form.validate_on_submit():
+            if form.picture.data:
+                profile_image = form.picture.data
+                mongo.save_file(profile_image.filename, profile_image)
+                users.update({'_id': ObjectId(session['user_id'])},
+                             {'$set': {
+                                        'profile_img': profile_image.filename,
+                             }
+                             })
+            users.update({'_id': ObjectId(session['user_id'])},
+                         {'$set': {
+                                    'first_name': form.firstname.data.lower(),
+                                    'last_name': form.lastname.data.lower(),
+                                    'username': form.username.data,
+                                    'email': form.email.data.lower(),
+                                   }
+                          })
+            flash('Your account has been updated!', 'success')
+            return redirect(url_for('account'))
+        elif request.method == 'GET':
+            form.firstname.data = user['first_name'].title()
+            form.lastname.data = user['last_name'].title()
+            form.username.data = user['username']
+            form.email.data = user['email']
         return render_template('account.html', title='Account',
-                               user=user)
+                               user=user, form=form)
     # If user is not logged in, redirect to login.html and save info about
     #   user's intention so as the corresponding page can be displayed after
     #   successful login.
     else:
         flash('Please login to access this page.', 'info')
         return redirect(url_for('login', next=request.endpoint))
+
+
+@app.route('/file/<filename>')
+def file(filename):
+    return mongo.send_file(filename)
