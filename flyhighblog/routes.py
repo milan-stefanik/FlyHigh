@@ -1,3 +1,7 @@
+# Importing os to have access to sytem-based functions and variables
+import os
+# Importing tool for generating secure random numbers
+import secrets
 # Importing required flask methods and functions
 from flask import render_template, redirect, url_for, flash, session, request
 # Importing Werkzeug Security Functions
@@ -128,14 +132,36 @@ def account():
         user = mongo.db.users.find_one({'_id': ObjectId(session['user_id'])})
         users = mongo.db.users
         if form.validate_on_submit():
+            # Checking if there are picture data in the form
             if form.picture.data:
+                # Checking if user already set profile image in the past.
+                # If yes, delete the old file from the database
+                if 'profile_img' in user:
+                    image = mongo.db.fs.files.find_one(
+                                                       {'filename':
+                                                        user['profile_img']}
+                                                       )
+                    image_id = image['_id']
+                    # Deleting file from fs.files
+                    mongo.db.fs.files.delete_one({'_id': ObjectId(image_id)})
+                    # Deleting file from fs.chungs
+                    mongo.db.fs.chunks.delete_many({'files_id':
+                                                    ObjectId(image_id)})
+                # Create random filename while keeping original file extension
+                random_hex = secrets.token_hex(8)
                 profile_image = form.picture.data
-                mongo.save_file(profile_image.filename, profile_image)
+                _, f_ext = os.path.splitext(profile_image.filename)
+                picture_fn = random_hex + f_ext
+                # Save file to the database
+                mongo.save_file(picture_fn, profile_image)
+                # Save file name reference to user document
                 users.update({'_id': ObjectId(session['user_id'])},
                              {'$set': {
-                                        'profile_img': profile_image.filename,
+                                        'profile_img': picture_fn,
                              }
                              })
+            # Update only those used details that have been changed
+            # All other details shall remain same
             users.update({'_id': ObjectId(session['user_id'])},
                          {'$set': {
                                     'first_name': form.firstname.data.lower(),
@@ -144,13 +170,17 @@ def account():
                                     'email': form.email.data.lower(),
                                    }
                           })
+            # Generate flash message on user info update
             flash('Your account has been updated!', 'success')
+            # Redirect to account.html
             return redirect(url_for('account'))
+        # Pull data from database and insert them to account form
         elif request.method == 'GET':
             form.firstname.data = user['first_name'].title()
             form.lastname.data = user['last_name'].title()
             form.username.data = user['username']
             form.email.data = user['email']
+        # Render account.html template with respective user info
         return render_template('account.html', title='Account',
                                user=user, form=form)
     # If user is not logged in, redirect to login.html and save info about
@@ -161,6 +191,7 @@ def account():
         return redirect(url_for('login', next=request.endpoint))
 
 
+# Retrieve file from database based on filename
 @app.route('/file/<filename>')
 def file(filename):
     return mongo.send_file(filename)
