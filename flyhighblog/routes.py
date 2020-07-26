@@ -2,6 +2,7 @@
 import os
 # Importing tool for generating secure random numbers
 import secrets
+from PIL import Image
 # Importing required flask methods and functions
 from flask import render_template, redirect, url_for, flash, session, request
 # Importing Werkzeug Security Functions
@@ -152,8 +153,18 @@ def account():
                 profile_image = form.picture.data
                 _, f_ext = os.path.splitext(profile_image.filename)
                 picture_fn = random_hex + f_ext
+                picture_path = os.path.join(app.root_path,
+                                            'static/img/profile-image',
+                                            picture_fn)
+                # Resizing image
+                output_size = (125, 125)
+                i = Image.open(profile_image)
+                i.thumbnail(output_size)
+                i.save(picture_path)
                 # Save file to the database
-                mongo.save_file(picture_fn, profile_image)
+                with open(picture_path, 'rb') as f:
+                    mongo.save_file(picture_fn, f)
+                os.remove(picture_path)
                 # Save file name reference to user document
                 users.update({'_id': ObjectId(session['user_id'])},
                              {'$set': {
