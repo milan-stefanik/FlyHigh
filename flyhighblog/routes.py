@@ -21,10 +21,17 @@ from flyhighblog.forms import (RegistrationForm, LoginForm,
 @app.route('/')
 @app.route('/index')
 def index():
+    posts = mongo.db.posts.find()
+    posts = [dict(post) for post in posts]
+    for post in posts:
+        user = mongo.db.users.find_one({'_id': ObjectId(post['author'])})
+        post['first_name'] = user['first_name'].title()
+        post['last_name'] = user['last_name'].title()
+        post['profile_image'] = user['profile_img']
     # Rendering index.html template with list of all posts pulled from MongoDB
     # 'title' variable customizes web-page title
-    return render_template('index.html', posts=mongo.db.posts.find(),
-                           users=mongo.db.users.find(), title='Home')
+    return render_template('index.html', posts=posts,
+                           title='Home')
 
 
 # About route
