@@ -22,7 +22,10 @@ from flyhighblog.forms import (RegistrationForm, LoginForm,
 @app.route('/index')
 def index():
     posts = mongo.db.posts.find()
+    # Converting MongoDB object to list of dictionaries
     posts = [dict(post) for post in posts]
+    # Amending list of dictionaries so as it contains required user
+    #   specific data
     for post in posts:
         user = mongo.db.users.find_one({'_id': ObjectId(post['author'])})
         post['first_name'] = user['first_name'].title()
