@@ -2,6 +2,8 @@
 import os
 # Importing tool for generating secure random numbers
 import secrets
+from datetime import datetime
+# Importing tool for Image processing
 from PIL import Image
 # Importing required flask methods and functions
 from flask import render_template, redirect, url_for, flash, session, request
@@ -11,7 +13,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from bson.objectid import ObjectId
 # Importing variables from other application packages
 from flyhighblog import app, mongo
-from flyhighblog.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from flyhighblog.forms import (RegistrationForm, LoginForm,
+                               UpdateAccountForm, PostForm)
 
 
 # Index route - listing all posts
@@ -21,7 +24,7 @@ def index():
     # Rendering index.html template with list of all posts pulled from MongoDB
     # 'title' variable customizes web-page title
     return render_template('index.html', posts=mongo.db.posts.find(),
-                           title='Home')
+                           users=mongo.db.users.find(), title='Home')
 
 
 # About route
@@ -211,3 +214,55 @@ def account():
 @app.route('/file/<filename>')
 def file(filename):
     return mongo.send_file(filename)
+
+
+@app.route('/post/new', methods=['GET', 'POST'])
+def new_post():
+    # If user is logged in (i.e. 'user_id' is in session),
+    #  allow access to new post
+    if 'user_id' in session:
+        # Defining form variable - UpdateAccountForm
+        form = PostForm()
+        if form.validate_on_submit():
+            # Create random filename while keeping original file extension
+            random_hex = secrets.token_hex(8)
+            post_image = form.picture.data
+            _, f_ext = os.path.splitext(post_image.filename)
+            picture_fn = random_hex + f_ext
+            # Set temporary path for profile pictures
+            picture_path = os.path.join(app.root_path,
+                                        'static/img/post-image',
+                                        picture_fn)
+            # Resizing image
+            basewidth = 1000
+            i = Image.open(post_image)
+            wpercent = (basewidth/float(i.size[0]))
+            hsize = int((float(i.size[1])*float(wpercent)))
+            i = i.resize((basewidth, hsize), Image.ANTIALIAS)
+            # Saving resized image to temporary folder
+            i.save(picture_path)
+            # Open saved resized picture for read mode (r)
+            #   with binary I/O (b)
+            with open(picture_path, 'rb') as f:
+                # Save resized picture to database
+                mongo.save_file(picture_fn, f)
+            # Delete resized picture from temporaty folder
+            os.remove(picture_path)
+            # Save file name reference to user document
+            post_doc = {
+                    'title': form.title.data,
+                    'date_posted': datetime.utcnow(),
+                    'content': form.content.data,
+                    'author': session['user_id'],
+                    'picture': picture_fn,
+                    }
+            mongo.db.posts.insert_one(post_doc)
+            flash('Your post has been created!', 'success')
+            return redirect(url_for('index'))
+        return render_template('new_post.html', title='New Post', form=form)
+    # If user is not logged in, redirect to login.html and save info about
+    #   user's intention so as the corresponding page can be displayed after
+    #   successful login.
+    else:
+        flash('Please login to access this page.', 'info')
+        return redirect(url_for('login', next=request.endpoint))

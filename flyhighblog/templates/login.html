@@ -21,7 +21,7 @@
 						{% endfor %}
 					</div>
 					{% else %}
-					<!-- If information is invalid, allow user to submit information -->
+					<!-- If information is valid, allow user to submit information -->
 					{{ form.email(class="form-control form-control-lg") }}
 					{% endif %}
 				</div>
@@ -38,7 +38,7 @@
 						{% endfor %}
 					</div>
 					{% else %}
-					<!-- If information is invalid, allow user to submit information -->
+					<!-- If information is valid, allow user to submit information -->
 					{{ form.password(class="form-control form-control-lg") }}
 					{% endif %}
 				</div>

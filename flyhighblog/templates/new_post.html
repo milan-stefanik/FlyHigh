@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+<!-- Defining variable for highlighting active links in navbar -->
+{% set active_page = "new_post" %}
+{% block content %}
+<div class="form-container">
+	<div>
+		<form method="POST" action="" novalidate enctype="multipart/form-data">
+			{{ form.hidden_tag() }}
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">New Post</legend>
+				<div class="form-group">
+					<!-- Title input - label -->
+					{{ form.title.label(class="form-control-label") }}
+					<!-- Checking if information passed by user is valid -->
+					{% if form.title.errors %}
+					<!-- If information is invalid, provide user with corresponding feedback -->
+					{{ form.title(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in form.title.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+					<!-- If information is valid, allow user to submit information -->
+					{{ form.title(class="form-control form-control-lg") }}
+					{% endif %}
+				</div>
+				<div class="form-group">
+					<!-- Content input - label -->
+					{{ form.content.label(class="form-control-label") }}
+					<!-- Checking if information passed by user is valid -->
+					{% if form.content.errors %}
+					<!-- If information is invalid, provide user with corresponding feedback -->
+					{{ form.content(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in form.content.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+					<!-- If information is valid, allow user to submit information -->
+					{{ form.content(class="form-control form-control-lg") }}
+					{% endif %}
+				</div>
+                <div class="form-group">
+					<!-- Picture input - label -->
+					{{ form.picture.label() }}
+                    {{ form.picture(class="form-control-file") }}
+                    {% if form.picture.errors %}
+                        {% for error in form.picture.errors %}
+						<span class="text-danger">{{ error }}</span><br>
+						{% endfor %}
+                    {% endif %}
+                </div>
+			</fieldset>
+			<!-- Login button -->
+			<div class="form-group">
+				{{ form.submit(class="btn btn-outline-secondary") }}
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock content %}

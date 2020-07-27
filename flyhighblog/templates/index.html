@@ -15,7 +15,11 @@
 				</div>
 				<div class="row date-author-line">
 					<div class="col-sm-6 col-12">
-						<p><a href="#"><i class="fas fa-feather-alt"></i> {{ post.author.title() }}</a></p>
+						{% for user in users %}
+                            {% if post.author|string == user._id|string %}
+                                <p><a href="#"><i class="fas fa-feather-alt"></i> {{ user.first_name }} {{ user.last_name }}</a></p>
+                            {% endif %}
+                        {% endfor %}
 					</div>
 					<div class="col-sm-6 col-12">
 						<p class="text-muted"><i class="far fa-calendar"></i> {{ post.date_posted }}</p>
@@ -24,14 +28,18 @@
                 <hr>
 				<div class="row">
 					<div class="col-12">
-						<p class = "content">{{ post.content.capitalize() }}</p>
+						<p class = "content">{{ post.content }}</p>
                         <button class="btn btn-outline-secondary" href="#"><small>Read more</small></button>
 					</div>
 				</div>
 			</div>
 		    <div class="col-lg-4 col-12">
 				<div class="wrapper">
-					<img src="{{url_for('static', filename='img/sample-image.jpg')}}" class="rounded" alt="article_image">
+					{% if post['picture'] %}
+                        <img class="rounded" src="{{ url_for('file', filename=post['picture']) }}" alt="Post Image">
+		            {% else %}
+                        <img class="rounded" src="{{url_for('static', filename='img/sample-image.jpg')}}" alt="Post Image">
+                    {% endif %}  
 				</div>
             </div>
         </div> 

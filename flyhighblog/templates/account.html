@@ -36,7 +36,7 @@
 						{% endfor %}
 					</div>
 					{% else %}
-					<!-- If information is invalid, allow user to submit information -->
+					<!-- If information is valid, allow user to submit information -->
 					{{ form.firstname(class="form-control form-control-lg") }}
 					{% endif %}
 
@@ -54,7 +54,7 @@
 						{% endfor %}
 					</div>
 					{% else %}
-					<!-- If information is invalid, allow user to submit information -->
+					<!-- If information is valid, allow user to submit information -->
 					{{ form.lastname(class="form-control form-control-lg") }}
 					{% endif %}
 				</div>
@@ -71,7 +71,7 @@
 						{% endfor %}
 					</div>
 					{% else %}
-					<!-- If information is invalid, allow user to submit information -->
+					<!-- If information is valid, allow user to submit information -->
 					{{ form.username(class="form-control form-control-lg") }}
 					{% endif %}
 				</div>
@@ -88,12 +88,12 @@
 						{% endfor %}
 					</div>
 					{% else %}
-					<!-- If information is invalid, allow user to submit information -->
+					<!-- If information is valid, allow user to submit information -->
 					{{ form.email(class="form-control form-control-lg") }}
 					{% endif %}
 				</div>
                 <div class="form-group">
-					<!-- Email input - label -->
+					<!-- Picture input - label -->
 					{{ form.picture.label() }}
                     {{ form.picture(class="form-control-file") }}
                     {% if form.picture.errors %}
