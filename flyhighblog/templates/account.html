@@ -4,17 +4,22 @@
 {% block content %}
 <div class="account-container">
 	<div class="media-body">
-		
-        {% if user['profile_img'] %}
-            <img class="rounded-circle account-img" src="{{ url_for('file', filename=user['profile_img']) }}" alt="Profile Image">
-		{% else %}
-            <img class="rounded-circle account-img" src="{{ url_for('static', filename='img/profile-image/userimage.jpg') }}" alt="Profile Image">
-        {% endif %}        
-        <div class="media-body">
-			<h2 class="account-heading">{{ user['first_name'].title() }} {{ user['last_name'].title() }}</h2>
-            <p>{{ user['email'] }}</p>
-            <br>
-            <br>
+		<div class="row">
+            <div class="col account-image">
+                {% if user['profile_img'] %}
+                    <img class="rounded-circle account-img" src="{{ url_for('file', filename=user['profile_img']) }}" alt="Profile Image">
+                {% else %}
+                    <img class="rounded-circle account-img" src="{{ url_for('static', filename='img/profile-image/userimage.jpg') }}" alt="Profile Image">
+                {% endif %}
+            </div>        
+            <div class="col">
+                <div class="media-body account-title">
+                    <h2 class="account-heading">{{ user['first_name'].title() }} {{ user['last_name'].title() }}</h2>
+                    <p>{{ user['email'] }}</p>
+                    <br>
+                    <br>
+                </div>
+            </div>
         </div>
 	</div>
 	<!-- UPDATE ACCOUNT FORM -->

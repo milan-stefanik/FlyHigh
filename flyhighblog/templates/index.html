@@ -8,24 +8,24 @@
 	<div class="media-body">
 		<div class="row">
 			<div class="col-lg-8 col-12">
-				<div class="row">
-					<div class="col-12">
-						<h5><a href="#">{{ post.title.title() }}</a></h5>
-					</div>
-				</div>
 				<div class="row date-author-line">
 					<div class="col-sm-6 col-12">
-                        <p><a href="#"><i class="fas fa-feather-alt"></i> {{ post.first_name }} {{ post.last_name }} {{ post.profile_image }}</a></p>
+                        <p><a class="post-link" href="#"><i class="fas fa-feather-alt"></i> {{ post.first_name }} {{ post.last_name }} </a></p>
 					</div>
-					<div class="col-sm-6 col-12">
-						<p class="text-muted"><i class="far fa-calendar"></i> {{ post.date_posted }}</p>
+					<div class="col-sm-6 col-12 date">
+						<p class="text-muted"><i class="far fa-calendar"></i> {{ post.date_posted.strftime('%d %B %Y') }}</p>
 					</div>
 				</div>
                 <hr>
+                <div class="row">
+					<div class="col-12">
+						<h5><a class="post-link" href="{{ url_for ('post', post_id=post._id)}}">{{ post.title.title() }}</a></h5>
+					</div>
+				</div>
 				<div class="row">
 					<div class="col-12">
 						<p class = "content">{{ post.content }}</p>
-                        <button class="btn btn-outline-secondary" href="#"><small>Read more</small></button>
+                        <a class="btn btn-outline-secondary button" href="{{ url_for ('post', post_id=post._id)}}"><small>Read more</small></a>
 					</div>
 				</div>
 			</div>

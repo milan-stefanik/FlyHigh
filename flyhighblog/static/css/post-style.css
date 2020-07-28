@@ -1,0 +1,33 @@
+.post-content {
+    margin-top: 1rem;
+}
+
+.picture-wrapper {
+    width: 100%;
+}
+
+.profile-image-column {
+    -ms-flex: 0 0 100px;
+    flex: 0 0 100px;
+    margin-left: 20px;
+}
+
+.content-column {
+    margin-right: 1rem;
+}
+
+.post-account-img {
+    width: 75px;
+    height: 75px;
+    border: 1px solid rgb(200, 200, 200);
+    padding: 3px;
+}
+
+.author-link {
+  color: rgb(100,100,100);
+}
+
+.author-link:hover {
+  text-decoration: none;
+  color: #17a2b8 !important;
+}

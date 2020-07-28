@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+<!-- Defining variable for highlighting active links in navbar -->
+{% set active_page = "home" %}
+{% block content %}
+<!-- Loop through the posts and generate list of posts -->
+<div class="media post">
+	<div class="media-body">
+		<div class="row">
+            <div class="col-12">
+                <div class="wrapper picture-wrapper">
+                    {% if post['picture'] %}
+                        <img class="rounded" src="{{ url_for('file', filename=post['picture']) }}" alt="Post Image">
+                    {% else %}
+                        <img class="rounded" src="{{url_for('static', filename='img/sample-image.jpg')}}" alt="Post Image">
+                    {% endif %}
+                </div>
+            </div>
+		</div>
+        
+		<div class="row post-content">
+			<div class="col profile-image-column">
+                {% if post['profile_image'] %}
+                    <img class="rounded-circle post-account-img" src="{{ url_for('file', filename=post['profile_image']) }}" alt="Profile Image">
+                {% else %}
+                    <img class="rounded-circle post-account-img" src="{{ url_for('static', filename='img/profile-image/userimage.jpg') }}" alt="Profile Image">
+                {% endif %} 
+			</div>
+			<div class="col content-column">
+				<div class="row">
+					<div class="col-sm-6 col-12">
+						<p><a class="author-link" href="#"><i class="fas fa-feather-alt"></i> {{ post.first_name }} {{ post.last_name }}
+							</a></p>
+					</div>
+					<div class="col-sm-6 col-12 date">
+						<p class="text-muted"><i class="far fa-calendar"></i>
+							{{ post.date_posted.strftime('%d %B %Y') }}</p>
+					</div>
+					<hr>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<hr>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<h5>{{ post.title.title() }}</h5>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<p>{{ post.content }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}
