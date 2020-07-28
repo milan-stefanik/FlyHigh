@@ -3,58 +3,88 @@
 {% set active_page = "home" %}
 {% block content %}
 <!-- Loop through the posts and generate list of posts -->
-<div class="media post">
+<div class="media post-single">
 	<div class="media-body">
 		<div class="row">
-            <div class="col-12">
-                <div class="wrapper picture-wrapper">
-                    {% if post['picture'] %}
-                        <img class="rounded" src="{{ url_for('file', filename=post['picture']) }}" alt="Post Image">
+			<div class="col-12">
+				<div class="wrapper picture-wrapper">
+					{% if post['picture'] %}
+					<img class="rounded" src="{{ url_for('file', filename=post['picture']) }}" alt="Post Image">
                     {% else %}
-                        <img class="rounded" src="{{url_for('static', filename='img/sample-image.jpg')}}" alt="Post Image">
+					<img class="rounded" src="{{url_for('static', filename='img/sample-image.jpg')}}" alt="Post Image">
                     {% endif %}
                 </div>
-            </div>
+			</div>
 		</div>
-        
 		<div class="row post-content">
 			<div class="col profile-image-column">
-                {% if post['profile_image'] %}
-                    <img class="rounded-circle post-account-img" src="{{ url_for('file', filename=post['profile_image']) }}" alt="Profile Image">
+				{% if post['profile_image'] %}
+		    		<img class="rounded-circle post-account-img" src="{{ url_for('file', filename=post['profile_image']) }}" alt="Profile Image">
                 {% else %}
-                    <img class="rounded-circle post-account-img" src="{{ url_for('static', filename='img/profile-image/userimage.jpg') }}" alt="Profile Image">
-                {% endif %} 
-			</div>
-			<div class="col content-column">
-				<div class="row">
-					<div class="col-sm-6 col-12">
-						<p><a class="author-link" href="#"><i class="fas fa-feather-alt"></i> {{ post.first_name }} {{ post.last_name }}
+					<img class="rounded-circle post-account-img" src="{{ url_for('static', filename='img/profile-image/userimage.jpg') }}" alt="Profile Image">
+                {% endif %}
+            </div>
+			<div class="col">
+				<div class="row row-meta">
+					<div class="col-12">
+						<p><a class="author-link" href="#"><i class="fas fa-feather-alt"></i>
+								{{ post.first_name }} {{ post.last_name }}
 							</a></p>
 					</div>
-					<div class="col-sm-6 col-12 date">
+				</div>
+				<div class="row row-meta">
+					<div class="col-12">
 						<p class="text-muted"><i class="far fa-calendar"></i>
 							{{ post.date_posted.strftime('%d %B %Y') }}</p>
 					</div>
-					<hr>
 				</div>
-				<div class="row">
-					<div class="col-12">
-						<hr>
-					</div>
+			</div>
+		</div>
+		{% if post.author == session['user_id'] %}
+			<div class="row">
+				<div class="col-6 change-buttons">
+					<a class="btn btn-outline-secondary btn-sm"
+						href="{{ url_for('update_post',  post_id=post._id) }}">Update</a>
 				</div>
-				<div class="row">
-					<div class="col-12">
-						<h5>{{ post.title.title() }}</h5>
-					</div>
+				<div class="col-6 change-buttons">
+					<button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="deleteModal">Delete</button>
 				</div>
-				<div class="row">
-					<div class="col-12">
-						<p>{{ post.content }}</p>
-					</div>
-				</div>
+			</div>
+		{% endif %}
+		<div class="row">
+			<div class="col-12">
+				<hr>
+			</div>
+		</div>
+
+		<div class="row post-text">
+			<div class="col-12">
+				<h5>{{ post.title.title() }}</h5>
+			</div>
+			<div class="col-12">
+				<p>{{ post.content }}</p>
+			</div>
+		</div>
+
+	</div>
+</div>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<form action="#" method="POST">
+					<input class="btn btn-danger" type="submit" value="Delete">
+          </form>
 			</div>
 		</div>
 	</div>
 </div>
-
 {% endblock content %}
