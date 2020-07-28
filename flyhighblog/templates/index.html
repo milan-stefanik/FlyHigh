@@ -34,7 +34,7 @@
 					{% if post['picture'] %}
                         <img class="rounded" src="{{ url_for('file', filename=post['picture']) }}" alt="Post Image">
 		            {% else %}
-                        <img class="rounded" src="{{url_for('static', filename='img/sample-image.jpg')}}" alt="Post Image">
+                        <img class="rounded" src="{{url_for('static', filename='img/post-image/sample-image.jpg')}}" alt="Post Image">
                     {% endif %}  
 				</div>
             </div>

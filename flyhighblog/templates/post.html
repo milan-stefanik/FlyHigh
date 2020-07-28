@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 <!-- Defining variable for highlighting active links in navbar -->
-{% set active_page = "home" %}
+{% set active_page = "single_post" %}
 {% block content %}
 <!-- Loop through the posts and generate list of posts -->
 <div class="media post-single">
@@ -11,7 +11,7 @@
 					{% if post['picture'] %}
 					<img class="rounded" src="{{ url_for('file', filename=post['picture']) }}" alt="Post Image">
                     {% else %}
-					<img class="rounded" src="{{url_for('static', filename='img/sample-image.jpg')}}" alt="Post Image">
+					<img class="rounded" src="{{url_for('static', filename='img/post-image/sample-image.jpg')}}" alt="Post Image">
                     {% endif %}
                 </div>
 			</div>
@@ -47,7 +47,7 @@
 						href="{{ url_for('update_post',  post_id=post._id) }}">Update</a>
 				</div>
 				<div class="col-6 change-buttons">
-					<button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="deleteModal">Delete</button>
+					<button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#deleteModal">Delete</button>
 				</div>
 			</div>
 		{% endif %}
@@ -68,6 +68,8 @@
 
 	</div>
 </div>
+
+<!-- Bootstrap Modal for deletion confirmation -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -79,10 +81,10 @@
           </button>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<form action="#" method="POST">
-					<input class="btn btn-danger" type="submit" value="Delete">
-          </form>
+				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+				<form action="{{ url_for('delete_post', post_id=post._id) }}" method="POST">
+					<input class="btn btn-outline-danger" type="submit" value="Delete">
+                </form>
 			</div>
 		</div>
 	</div>

@@ -25,14 +25,17 @@ from flyhighblog.forms import (RegistrationForm, LoginForm,
 @app.route('/index')
 def index():
     posts = mongo.db.posts.find()
+
     # Converting MongoDB object to list of dictionaries
     posts = [dict(post) for post in posts]
+
     # Amending list of dictionaries so as it contains required user
     #   specific data
     for post in posts:
         user = mongo.db.users.find_one({'_id': ObjectId(post['author'])})
         post['first_name'] = user['first_name'].title()
         post['last_name'] = user['last_name'].title()
+
     # Rendering index.html template with list of all posts pulled from MongoDB
     # 'title' variable customizes web-page title
     return render_template('index.html', posts=posts,
@@ -54,15 +57,19 @@ def register():
     if 'user_id' in session:
         # If user logged in, redirect to index.html
         return redirect(url_for('index'))
+
     # Defining form variable - Registration form
     form = RegistrationForm()
+
     # If form is validated successfuly, hash password,
     #   save userdata to database
     #   and use Flask flash to render success
     #   message and redirect to index.html
     if form.validate_on_submit():
+
         # Hashing the password
         hashpass = generate_password_hash(form.password.data)
+
         # Saving data from form to variable
         user_doc = {
                     'first_name': form.firstname.data.lower(),
@@ -73,11 +80,14 @@ def register():
                     }
         # Sending data to database
         mongo.db.users.insert_one(user_doc)
+
         # Defining flash message for successful registration
         flash('Account has been created! You can now log in.',
               'success')
+
         # Redirecting to login.html
         return redirect(url_for('login'))
+
     # Render register.html with respective registration form
     # 'title' variable customizes web-page title
     return render_template('register.html', title='Register', form=form)
@@ -90,37 +100,45 @@ def login():
     if 'user_id' in session:
         # If user logged in, redirect to index.html
         return redirect(url_for('index'))
+
     # Defining form variable - Login form
     form = LoginForm()
+
     # Validate passed login information,
     #   use Flask flash to render respective message (passed/failed)
     #   and redirect to index.html
     if form.validate_on_submit():
         user = mongo.db.users.find_one({'email': form.email.data.lower()})
+
         # Checking if provided password corresponds to password saved in
         #   database
         if user and check_password_hash(user['password'],
                                         form.password.data):
             # Saving 'user_id' into session cookie
             session['user_id'] = str(user['_id'])
+
             # Defining flash message for successful login
             flash('You are now logged in as {} '
                   '{}'.format(user['first_name'].title(),
                               user['last_name'].title()),
                   'success')
+
             # Getting information about user's intention before
             #   login page was displayed
             next_page = request.args.get('next')
+
             # After login, redirecting to page user as per the
             #   user's original intention
             if next_page:
                 return redirect(url_for(next_page))
             else:
                 return redirect(url_for('index'))
+
         else:
             # Defining flash message for failed login
             flash('Login Unsuccessful. Please check email and password.',
                   'danger')
+
     # Render login.html with respective login form
     # 'title' variable customizes web-page title
     return render_template('login.html', title='Login', form=form)
@@ -143,13 +161,16 @@ def account():
     #  allow access to account.html and display corresponding
     #  account information
     if 'user_id' in session:
+
         # Defining form variable - UpdateAccountForm
         form = UpdateAccountForm()
         user = mongo.db.users.find_one({'_id': ObjectId(session['user_id'])})
         users = mongo.db.users
         if form.validate_on_submit():
+
             # Checking if there are picture data in the form
             if form.picture.data:
+
                 # Checking if user already set profile image in the past.
                 # If yes, delete the old file from the database
                 if 'profile_img' in user:
@@ -163,34 +184,42 @@ def account():
                     # Deleting file from fs.chunks
                     mongo.db.fs.chunks.delete_many({'files_id':
                                                     ObjectId(image_id)})
+
                 # Create random filename while keeping original file extension
                 random_hex = secrets.token_hex(8)
                 profile_image = form.picture.data
                 _, f_ext = os.path.splitext(profile_image.filename)
                 picture_fn = random_hex + f_ext
+
                 # Set temporary path for profile pictures
                 picture_path = os.path.join(app.root_path,
                                             'static/img/profile-image',
                                             picture_fn)
+
                 # Resizing image
                 output_size = (125, 125)
                 i = Image.open(profile_image)
                 i.thumbnail(output_size)
+
                 # Saving resized image to temporary folder
                 i.save(picture_path)
+
                 # Open saved resized picture for read mode (r)
                 #   with binary I/O (b)
                 with open(picture_path, 'rb') as f:
                     # Save resized picture to database
                     mongo.save_file(picture_fn, f)
+
                 # Delete resized picture from temporaty folder
                 os.remove(picture_path)
+
                 # Save file name reference to user document
                 users.update({'_id': ObjectId(session['user_id'])},
                              {'$set': {
                                         'profile_img': picture_fn,
                              }
                              })
+
             # Update only those used details that have been changed
             # All other details shall remain same
             users.update({'_id': ObjectId(session['user_id'])},
@@ -201,19 +230,23 @@ def account():
                                     'email': form.email.data.lower(),
                                    }
                           })
+
             # Generate flash message on user info update
             flash('Your account has been updated!', 'success')
             # Redirect to account.html
             return redirect(url_for('account'))
+
         # Pull data from database and insert them to account form
         elif request.method == 'GET':
             form.firstname.data = user['first_name'].title()
             form.lastname.data = user['last_name'].title()
             form.username.data = user['username']
             form.email.data = user['email']
+
         # Render account.html template with respective user info
         return render_template('account.html', title='Account',
                                user=user, form=form)
+
     # If user is not logged in, redirect to login.html and save info about
     #   user's intention so as the corresponding page can be displayed after
     #   successful login.
@@ -233,33 +266,42 @@ def new_post():
     # If user is logged in (i.e. 'user_id' is in session),
     #  allow access to new post
     if 'user_id' in session:
+
         # Defining form variable - UpdateAccountForm
         form = PostForm()
+
+        # Check if form inputs are valid
         if form.validate_on_submit():
             # Create random filename while keeping original file extension
             random_hex = secrets.token_hex(8)
             post_image = form.picture.data
             _, f_ext = os.path.splitext(post_image.filename)
             picture_fn = random_hex + f_ext
+
             # Set temporary path for post pictures
             picture_path = os.path.join(app.root_path,
                                         'static/img/post-image',
                                         picture_fn)
+
             # Resizing image
             basewidth = 1000
             i = Image.open(post_image)
             wpercent = (basewidth/float(i.size[0]))
             hsize = int((float(i.size[1])*float(wpercent)))
             i = i.resize((basewidth, hsize), Image.ANTIALIAS)
+
             # Saving resized image to temporary folder
             i.save(picture_path)
+
             # Open saved resized picture for read mode (r)
             #   with binary I/O (b)
             with open(picture_path, 'rb') as f:
                 # Save resized picture to database
                 mongo.save_file(picture_fn, f)
+
             # Delete resized picture from temporaty folder
             os.remove(picture_path)
+
             # Save file name reference to post document
             post_doc = {
                     'title': form.title.data,
@@ -269,9 +311,13 @@ def new_post():
                     'picture': picture_fn,
                     }
             mongo.db.posts.insert_one(post_doc)
+
+            # Flash message informing about successful creation of post
             flash('Your post has been created!', 'success')
             return redirect(url_for('index'))
+
         return render_template('new_post.html', title='New Post', form=form)
+
     # If user is not logged in, redirect to login.html and save info about
     #   user's intention so as the corresponding page can be displayed after
     #   successful login.
@@ -288,12 +334,15 @@ def post(post_id):
     except (InvalidId, TypeError):
         abort(404)
     post = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
+
     # If post does not exist retutn 404
     if post is None:
         abort(404)
+
     # Converting MongoDB object to dictionary
     post = dict(post)
     user = mongo.db.users.find_one({'_id': ObjectId(post['author'])})
+
     # Amending post dictionary so as it contains required user
     #   specific data
     post['first_name'] = user['first_name'].title()
@@ -308,24 +357,32 @@ def update_post(post_id):
     # If user is logged in (i.e. 'user_id' is in session),
     #  allow access to new post
     if 'user_id' in session:
+
         # Check validity of ObjectId and return 404 if invalid
         try:
             ObjectId(post_id)
         except (InvalidId, TypeError):
             abort(404)
+
         posts = mongo.db.posts
         post = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
+
         # If post does not exist retutn 404
         if post is None:
             abort(404)
+
         # If logged user is not author of post, return 403
         if post['author'] != session['user_id']:
             abort(403)
+
         form = UpdatePostForm()
+
         if form.validate_on_submit():
+
             # Checking if there are picture data in the form
             if form.picture.data:
-                # Checking if user already set profile image in the past.
+
+                # Checking if user already inserted post picture in the past.
                 # If yes, delete the old file from the database
                 if 'picture' in post:
                     image = mongo.db.fs.files.find_one(
@@ -338,37 +395,45 @@ def update_post(post_id):
                     # Deleting file from fs.chunks
                     mongo.db.fs.chunks.delete_many({'files_id':
                                                     ObjectId(image_id)})
+
                 # Create random filename while keeping original file
                 #   extension
                 random_hex = secrets.token_hex(8)
                 post_image = form.picture.data
                 _, f_ext = os.path.splitext(post_image.filename)
                 picture_fn = random_hex + f_ext
+
                 # Set temporary path for post pictures
                 picture_path = os.path.join(app.root_path,
                                             'static/img/post-image',
                                             picture_fn)
+
                 # Resizing image
                 basewidth = 1000
                 i = Image.open(post_image)
                 wpercent = (basewidth/float(i.size[0]))
                 hsize = int((float(i.size[1])*float(wpercent)))
                 i = i.resize((basewidth, hsize), Image.ANTIALIAS)
+
                 # Saving resized image to temporary folder
                 i.save(picture_path)
+
                 # Open saved resized picture for read mode (r)
                 #   with binary I/O (b)
                 with open(picture_path, 'rb') as f:
                     # Save resized picture to database
                     mongo.save_file(picture_fn, f)
+
                 # Delete resized picture from temporaty folder
                 os.remove(picture_path)
+
                 # Save file name reference to post document
                 posts.update({'_id': ObjectId(post_id)},
                              {'$set': {
                                         'picture': picture_fn,
                                       }
                               })
+
             # Update only those used details that have been changed
             # All other details shall remain same
             posts.update({'_id': ObjectId(post_id)},
@@ -377,10 +442,13 @@ def update_post(post_id):
                                     'content': form.content.data,
                                   }
                           })
+
             # Generate flash message on user info update
             flash('Post has been updated!', 'success')
+
             # Redirect to account.html
             return redirect(url_for('post', post_id=post_id))
+
         # Pull data from database and insert them to account form
         # Pull data from database and insert them to update post form
         elif request.method == 'GET':
@@ -388,6 +456,54 @@ def update_post(post_id):
             form.title.data = post['content']
         return render_template('update_post.html', title='Update Post',
                                form=form)
+
+    # If user is not logged in, redirect to login.html and save info about
+    #   user's intention so as the corresponding page can be displayed after
+    #   successful login.
+    else:
+        flash('Please login to access this page.', 'info')
+        return redirect(url_for('login', next=request.endpoint))
+
+
+# Route for deleting post
+@app.route("/post/<post_id>/delete", methods=['POST'])
+def delete_post(post_id):
+    # If user is logged in (i.e. 'user_id' is in session),
+    #  allow access to new post
+    if 'user_id' in session:
+
+        # Check validity of ObjectId and return 404 if invalid
+        try:
+            ObjectId(post_id)
+        except (InvalidId, TypeError):
+            abort(404)
+        post = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
+
+        # If post does not exist retutn 404
+        if post is None:
+            abort(404)
+
+        # If logged user is not author of post, return 403
+        if post['author'] != session['user_id']:
+            abort(403)
+
+        if 'picture' in post:
+            image = mongo.db.fs.files.find_one(
+                                               {'filename':
+                                                post['picture']}
+                                               )
+            image_id = image['_id']
+            # Deleting file from fs.files
+            mongo.db.fs.files.delete_one({'_id': ObjectId(image_id)})
+            # Deleting file from fs.chunks
+            mongo.db.fs.chunks.delete_many({'files_id':
+                                            ObjectId(image_id)})
+
+        # Delete post from database
+        mongo.db.posts.delete_one({'_id': ObjectId(post_id)})
+
+        flash('Post has been deleted.', 'info')
+        return redirect(url_for('index'))
     # If user is not logged in, redirect to login.html and save info about
     #   user's intention so as the corresponding page can be displayed after
     #   successful login.
