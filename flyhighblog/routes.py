@@ -24,7 +24,7 @@ from flyhighblog.forms import (RegistrationForm, LoginForm,
 @app.route('/')
 @app.route('/index')
 def index():
-    posts = mongo.db.posts.find()
+    posts = mongo.db.posts.find().sort('date_posted', -1)
 
     # Converting MongoDB object to list of dictionaries
     posts = [dict(post) for post in posts]
