@@ -46,7 +46,7 @@ body {
 /* -----------------------HERO IMAGE--------------------------- */
 
 #hero-image {
-  background: url("../img/hero-image.jpg") no-repeat center center;
+  background: url("../img/hero-image.jpg") no-repeat top center;
   background-size: cover;
   margin-top: 0;
   margin-bottom: 2rem;
@@ -94,7 +94,11 @@ body {
   color: rgb(255, 255, 255);
   padding: 0;
   margin: 0;
-  font-size: 2rem;
+  font-size: 1rem;
+}
+
+.footer-head p {
+  font-size: 0.75rem;
 }
 
 .footer-icons ul li {
