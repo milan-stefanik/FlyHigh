@@ -82,3 +82,7 @@
   text-decoration: none;
   color: #17a2b8 !important;
 }
+
+.post-text p {
+    white-space: pre-line;
+}
