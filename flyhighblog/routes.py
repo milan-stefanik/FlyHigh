@@ -502,7 +502,7 @@ def delete_post(post_id):
         # Delete post from database
         mongo.db.posts.delete_one({'_id': ObjectId(post_id)})
 
-        flash('Post has been deleted.', 'info')
+        flash('Post has been deleted.', 'success')
         return redirect(url_for('index'))
     # If user is not logged in, redirect to login.html and save info about
     #   user's intention so as the corresponding page can be displayed after
