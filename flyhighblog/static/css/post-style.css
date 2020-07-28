@@ -85,4 +85,5 @@
 
 .post-text p {
     white-space: pre-line;
+    text-align: justify;
 }
