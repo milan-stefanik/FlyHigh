@@ -1,76 +1,76 @@
 /* ----------------------- LIST OF POSTS --------------------------- */
 .post {
-  margin-bottom: 1rem;
-  padding: 1rem;
-  background-color: rgb(250, 250, 250);
-  box-shadow: 0.5rem 0.5rem 0.5rem rgb(200, 200, 200);
-  border-radius: 5px;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: rgb(250, 250, 250);
+    box-shadow: 0.5rem 0.5rem 0.5rem rgb(200, 200, 200);
+    border-radius: 5px;
 }
 
 .post h5 {
-  margin-top: 0.2rem;
-  margin-bottom: 1rem;
+    margin-top: 0.2rem;
+    margin-bottom: 1rem;
 }
 
 .post p {
-  margin-top: 0.2rem;
-  margin-bottom: 0.2rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
 }
 
 .post-link {
-  color: rgb(100,100,100);
+    color: rgb(100,100,100);
 }
 
 .post-link:hover {
-  text-decoration: none;
-  color: #17a2b8 !important;
+    text-decoration: none;
+    color: #17a2b8 !important;
 }
 
 .post hr {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .date-author-line {
-  font-size: 0.9rem;
+    font-size: 0.9rem;
 }
 
 .content-container {
-  height: 8rem;
-  width: 100%;
-  position: relative;
-  padding: 0;
+    height: 8rem;
+    width: 100%;
+    position: relative;
+    padding: 0;
 }
 
 .content-box {
-  width: 100%;
-  height: 100%;            
-  position: absolute;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  padding-left: 0.9rem;
-  padding-right: 0.9rem;
-  
+    width: 100%;
+    height: 100%;            
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    padding-left: 0.9rem;
+    padding-right: 0.9rem;
 }
 
 .content-box p {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  white-space: break-spaces;
-  text-align: justify;
-  text-align-last: left;
-  -moz-text-align-last: left;
-  -ms-text-align-last: left;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    white-space: break-spaces;
+    text-align: justify;
+    text-align-last: left;
+    -moz-text-align-last: left;
+    -ms-text-align-last: left;
 }
 
+/* DIV overlay for fading text effect */
 .content-overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 9;
-  background-image: linear-gradient( rgba(250,250,250,0), rgba(250,250,250,1));
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+    background-image: linear-gradient( rgba(250,250,250,0), rgba(250,250,250,1));
 }
 
 .button {
@@ -82,18 +82,18 @@
 }
 
 .wrapper {
-  display: inline-block;
-  height: 100%;
-  width: auto;
-  vertical-align: middle;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+    display: inline-block;
+    height: 100%;
+    width: auto;
+    vertical-align: middle;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 }
 
 .wrapper img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  display: table-cell;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: table-cell;
 }
 

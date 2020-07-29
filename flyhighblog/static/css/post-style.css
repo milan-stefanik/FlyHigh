@@ -74,15 +74,18 @@
 }
 
 .author-link {
-  color: rgb(100,100,100);
+    color: rgb(100,100,100);
 }
 
 .author-link:hover {
-  text-decoration: none;
-  color: #17a2b8 !important;
+    text-decoration: none;
+    color: #17a2b8 !important;
 }
 
 .post-text p {
-    white-space: pre-line;
+    white-space: break-spaces;
     text-align: justify;
+    text-align-last: left;
+    -moz-text-align-last: left;
+    -ms-text-align-last: left;
 }
