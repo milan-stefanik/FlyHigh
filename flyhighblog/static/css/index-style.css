@@ -51,7 +51,7 @@
   overflow: hidden;
   padding-left: 0.9rem;
   padding-right: 0.9rem;
-  text-align: justify;
+  
 }
 
 .content-box p {
@@ -59,6 +59,10 @@
   height: 100%;
   margin: 0;
   white-space: pre-line;
+  text-align: justify;
+  text-align-last: left;
+  -moz-text-align-last: left;
+  -ms-text-align-last: left;
 }
 
 .content-overlay {
