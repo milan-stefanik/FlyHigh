@@ -35,10 +35,32 @@
   font-size: 0.9rem;
 }
 
-.content {
+.content-container {
   height: 8rem;
-  text-align: justify;
+  width: 100%;
+  position: relative;
+  padding: 0;
+}
+
+.content-box {
+  width: 100%;
+  height: 100%;            
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  padding-left: 0.9rem;
+  padding-right: 0.9rem;
   white-space: pre-line;
+  text-align: justify;
+}
+
+.content-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  background-image: linear-gradient( rgba(250,250,250,0), rgba(250,250,250,1));
 }
 
 .button {

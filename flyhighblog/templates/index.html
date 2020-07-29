@@ -23,11 +23,17 @@
 					</div>
 				</div>
 				<div class="row">
+					<div class="col-12 content-container">
+                        <div class="content-box">
+                            <p class="content">{{ post.content }}</p>
+                        </div>
+                        <div class="content-overlay"></div>
+					</div>
+				</div>
+                <div class="row">
 					<div class="col-12">
-						<p class="content">{{ post.content }}</p>
                         <p><a class="btn btn-outline-secondary button" href="{{ url_for ('post', post_id=post._id)}}"><small>Read more</small></a></p>
 					</div>
-                    
 				</div>
 			</div>
 		    <div class="col-lg-4 col-12">

@@ -452,8 +452,8 @@ def update_post(post_id):
         # Pull data from database and insert them to account form
         # Pull data from database and insert them to update post form
         elif request.method == 'GET':
-            form.content.data = post['title']
-            form.title.data = post['content']
+            form.title.data = post['title']
+            form.content.data = post['content']
         return render_template('update_post.html', title='Update Post',
                                form=form)
 
