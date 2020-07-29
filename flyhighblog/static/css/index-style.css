@@ -60,8 +60,10 @@
     white-space: break-spaces;
     text-align: justify;
     text-align-last: left;
+    -webkit-text-align-last: left;
     -moz-text-align-last: left;
     -ms-text-align-last: left;
+    -o-text-align-last: left;
 }
 
 /* DIV overlay for fading text effect */
