@@ -22,6 +22,14 @@ from flyhighblog.forms import (RegistrationForm, LoginForm,
                                UpdatePostForm)
 
 
+@app.context_processor
+def context_processor():
+    users = mongo.db.users.find().sort('first_name')
+    # Converting MongoDB object to list of dictionaries
+    users = [dict(user) for user in users]
+    return dict(users_all=users)
+
+
 # Function to filter by pagination parameters
 def get_items(items, offset, per_page):
     return items[offset: offset + per_page]

@@ -47,32 +47,39 @@
 				<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
 					<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 						<li class="nav-item">
-							<a class="nav-link {{ 'hvr-underline-from-left-active' if active_page == 'home' else 'hvr-underline-from-left' }}"
+							<a class="nav-link {{ 'active' if active_page == 'home' else 'hvr-underline-from-left' }}"
 								href="{{ url_for('index') }}">Home</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link {{ 'hvr-underline-from-left-active' if active_page == 'about' else 'hvr-underline-from-left' }}"
-								href="{{ url_for('about') }}">About</a>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle {{ 'active' if active_page == 'user_posts' else 'hvr-underline-from-left' }}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+								aria-haspopup="true" aria-expanded="false">
+								Authors
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								{% for user in users_all %}
+                                    <a class="dropdown-item" href="{{ url_for('user_posts', username=user.username) }}">{{ user.first_name }} {{ user.last_name }}</a>
+                                {% endfor %}
+							</div>
 						</li>
 					</ul>
 					<ul class="navbar-nav mt-2 mt-lg-0">
 						<!-- Displaying links corresponding to user status (authenticated/logged out) -->
                         {% if 'user_id' in session %}
                             <li class="nav-item">
-                                <a class="nav-link {{ 'hvr-underline-from-left-active' if active_page == 'new_post' else 'hvr-underline-from-left' }}" href="{{ url_for('new_post') }}">New Post</a>
+                                <a class="nav-link {{ 'active' if active_page == 'new_post' else 'hvr-underline-from-left' }}" href="{{ url_for('new_post') }}">New Post</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ 'hvr-underline-from-left-active' if active_page == 'account' else 'hvr-underline-from-left' }}" href="{{ url_for('account') }}">Account</a>
+                                <a class="nav-link {{ 'active' if active_page == 'account' else 'hvr-underline-from-left' }}" href="{{ url_for('account') }}">Account</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ 'hvr-underline-from-left' }}" href="{{ url_for('logout') }}">Logout</a>
+                                <a class="nav-link hvr-underline-from-left" href="{{ url_for('logout') }}">Logout</a>
                             </li>
                         {% else %}
                             <li class="nav-item">
-                                <a class="nav-link {{ 'hvr-underline-from-left-active' if active_page == 'login' else 'hvr-underline-from-left' }}" href="{{ url_for('login') }}">Login</a>
+                                <a class="nav-link {{ 'active' if active_page == 'login' else 'hvr-underline-from-left' }}" href="{{ url_for('login') }}">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ 'hvr-underline-from-left-active' if active_page == 'register' else 'hvr-underline-from-left' }}" href="{{ url_for('register') }}">Register</a>
+                                <a class="nav-link {{ 'active' if active_page == 'register' else 'hvr-underline-from-left' }}" href="{{ url_for('register') }}">Register</a>
                             </li>
                         {% endif %}
 					</ul>

@@ -8,8 +8,8 @@
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
     position: relative;
     overflow: hidden;
-    color: rgb(255,255,255) !important;
 }
+
 .hvr-underline-from-left:before {
     content: "";
     position: absolute;
@@ -17,7 +17,7 @@
     left: 0;
     right: 100%;
     bottom: 0;
-    background:rgb(255,255,255);
+    background:rgba(255,255,255,.5);
     height: 2px;
     -webkit-transition-property: right;
     transition-property: right;
@@ -28,8 +28,4 @@
 }
 .hvr-underline-from-left:hover:before, .hvr-underline-from-left:focus:before {
     right: 0;
-}
-
-.hvr-underline-from-left-active {
-    font-weight: 700 !important;
 }
