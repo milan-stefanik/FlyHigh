@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 <!-- Defining variable for highlighting active links in navbar -->
-{% set active_page = "home" %}
+{% set active_page = "user_posts" %}
 {% block content %}
 <!-- Loop through the posts and generate list of posts -->
+<h1 class="mb-3">Posts by {{ first_name }} {{ last_name }} ({{ posts_count }})</h1>
 {% for post in posts %}
 <div class="media post">
 	<div class="media-body">
@@ -10,7 +11,7 @@
 			<div class="col-lg-8 col-12">
 				<div class="row date-author-line">
 					<div class="col-sm-6 col-12">
-                        <p><a class="post-link" href="{{ url_for('user_posts', username=post.username) }}"><i class="fas fa-feather-alt"></i> {{ post.first_name }} {{ post.last_name }} </a></p>
+                        <p><i class="fas fa-feather-alt"></i> {{ post.first_name }} {{ post.last_name }} </p>
 					</div>
 					<div class="col-sm-6 col-12 date">
 						<p class="text-muted"><i class="far fa-calendar"></i> {{ post.date_posted.strftime('%d %B %Y') }}</p>

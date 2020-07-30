@@ -8,6 +8,8 @@ from PIL import Image
 # Importing required flask methods and functions
 from flask import (render_template, redirect, url_for, flash,
                    session, request, abort)
+# Importing Flask pagination function
+from flask_paginate import Pagination
 # Importing Werkzeug Security Functions
 from werkzeug.security import generate_password_hash, check_password_hash
 # Importing Tools for working with MongoDB ObjectIds
@@ -18,6 +20,11 @@ from flyhighblog import app, mongo
 from flyhighblog.forms import (RegistrationForm, LoginForm,
                                UpdateAccountForm, PostForm,
                                UpdatePostForm)
+
+
+# Function to filter by pagination parameters
+def get_items(items, offset, per_page):
+    return items[offset: offset + per_page]
 
 
 # Index route - listing all posts
@@ -35,10 +42,29 @@ def index():
         user = mongo.db.users.find_one({'_id': ObjectId(post['author'])})
         post['first_name'] = user['first_name'].title()
         post['last_name'] = user['last_name'].title()
+        post['username'] = user['username']
+
+    # Pagination parameters
+    page = int(request.args.get('page', 1))
+    per_page = 5
+    offset = (page - 1) * per_page
+
+    total = len(posts)
+
+    pagination_posts = get_items(posts, offset=offset, per_page=per_page)
+
+    # Pagination options - refer to https://pythonhosted.org/Flask-paginate/
+    pagination = Pagination(page=page, per_page=per_page, total=total,
+                            css_framework='bootstrap4', inner_window=1,
+                            outer_window=0)
 
     # Rendering index.html template with list of all posts pulled from MongoDB
     # 'title' variable customizes web-page title
-    return render_template('index.html', posts=posts,
+    return render_template('index.html',
+                           posts=pagination_posts,
+                           page=page,
+                           per_page=per_page,
+                           pagination=pagination,
                            title='Home')
 
 
@@ -510,3 +536,49 @@ def delete_post(post_id):
     else:
         flash('Please login to access this page.', 'info')
         return redirect(url_for('login', next=request.endpoint))
+
+
+@app.route('/user/<string:username>')
+def user_posts(username):
+    user = mongo.db.users.find_one({'username': username})
+    user_id = str(user['_id'])
+    first_name = user['first_name'].title()
+    last_name = user['last_name'].title()
+    posts = mongo.db.posts.find({'author': user_id}).sort('date_posted', -1)
+
+    # Converting MongoDB object to list of dictionaries
+    posts = [dict(post) for post in posts]
+
+    # Amending list of dictionaries so as it contains required user
+    #   specific data
+    for post in posts:
+        user = mongo.db.users.find_one({'_id': ObjectId(post['author'])})
+        post['first_name'] = user['first_name'].title()
+        post['last_name'] = user['last_name'].title()
+        post['username'] = user['username']
+
+    # Pagination parameters
+    page = int(request.args.get('page', 1))
+    per_page = 5
+    offset = (page - 1) * per_page
+
+    total = len(posts)
+
+    pagination_posts = get_items(posts, offset=offset, per_page=per_page)
+
+    # Pagination options - refer to https://pythonhosted.org/Flask-paginate/
+    pagination = Pagination(page=page, per_page=per_page, total=total,
+                            css_framework='bootstrap4', inner_window=1,
+                            outer_window=0)
+
+    # Rendering index.html template with list of all posts pulled from MongoDB
+    # 'title' variable customizes web-page title
+    return render_template('user_posts.html',
+                           first_name=first_name,
+                           last_name=last_name,
+                           posts=pagination_posts,
+                           posts_count=total,
+                           page=page,
+                           per_page=per_page,
+                           pagination=pagination,
+                           title='User Posts')
