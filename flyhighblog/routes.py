@@ -621,7 +621,8 @@ def send_email(user):
                   sender='noreply@flyhigh.com',
                   recipients=[user['email']])
     msg.body = '''
-               To reset your password, visit the following link: {}
+               To reset your password, visit the following link:
+               {}
                If you did not make this request then simply ignore
                this email and no changes will be made.
                '''.format(url_for('reset_password',
