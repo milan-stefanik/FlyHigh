@@ -24,7 +24,7 @@ class RegistrationForm(FlaskForm):
                            validators=[DataRequired(), Length(min=2, max=25)])
     username = StringField('Username',
                            validators=[DataRequired(), Length(min=2, max=20)])
-    email = StringField('Email',
+    email = StringField('E-mail',
                         validators=[DataRequired(), Email()])
     password = PasswordField('Password',
                              validators=[DataRequired()])
@@ -51,7 +51,7 @@ class RegistrationForm(FlaskForm):
 
 # Defining form for user login including from validation parameters
 class LoginForm(FlaskForm):
-    email = StringField('Email',
+    email = StringField('E-mail',
                         validators=[DataRequired(), Email()])
     password = PasswordField('Password',
                              validators=[DataRequired()])
@@ -67,7 +67,7 @@ class UpdateAccountForm(FlaskForm):
                            validators=[DataRequired(), Length(min=2, max=25)])
     username = StringField('Username',
                            validators=[DataRequired(), Length(min=2, max=20)])
-    email = StringField('Email',
+    email = StringField('E-mail',
                         validators=[DataRequired(), Email()])
     picture = FileField('Update Profile Picture',
                         validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
@@ -104,9 +104,38 @@ class PostForm(FlaskForm):
     submit = SubmitField('Post')
 
 
+# Defining form for updating existing post
+#   including form validation parameters
 class UpdatePostForm(FlaskForm):
     title = StringField('Post Title', validators=[DataRequired()])
     content = TextAreaField('Content', validators=[DataRequired()])
     picture = FileField('Change post picture',
                         validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
     submit = SubmitField('Update')
+
+
+# Defining form for requesting password reset
+#   including form validation parameters
+class RequestPasswordResetForm(FlaskForm):
+    email = StringField('E-mail',
+                        validators=[DataRequired(), Email()])
+    submit = SubmitField('Request password reset')
+
+    # Validation of email - if does not exist, return validation error
+    def validate_email(self, email):
+        if mongo.db.users.count_documents({'email': email.data}, limit=1) < 1:
+            raise ValidationError(
+                                  'There is no account associated '
+                                  'with this e-mail address! '
+                                  'You must register first.')
+
+
+# Defining form for password change
+#   including form validation parameters
+class PasswordResetForm(FlaskForm):
+    password = PasswordField('Password',
+                             validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[DataRequired(),
+                                                 EqualTo('password')])
+    submit = SubmitField('Reset Password')

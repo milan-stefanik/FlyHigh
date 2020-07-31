@@ -4,6 +4,8 @@ import os
 from flask import Flask
 # Importing tools for interacting with MongoDB
 from flask_pymongo import PyMongo
+# Importing flask-mail
+from flask_mail import Mail
 
 
 # Importing system-based variables in development environment
@@ -30,6 +32,15 @@ app.config['MONGO_URI'] = os.getenv('MONGO_URI')
 
 # Setting the PyMongo application object
 mongo = PyMongo(app)
+
+# Setting email parameters
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = os.environ.get('EMAIL_USER')
+app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASS')
+mail = Mail(app)
 
 # Importing routes.py from flyhighblog folder
 # Import is not on the top of file to avoid circular imports
