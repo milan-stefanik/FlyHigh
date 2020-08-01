@@ -152,7 +152,7 @@ def update_post(post_id):
             form.title.data = post['title']
             form.content.data = post['content']
         return render_template('update_post.html', title='Update Post',
-                               form=form)
+                               form=form, post_id=post_id)
 
     # If user is not logged in, redirect to login.html and save info about
     #   user's intention so as the corresponding page can be displayed after
