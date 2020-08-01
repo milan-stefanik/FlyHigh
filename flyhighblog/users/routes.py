@@ -19,8 +19,10 @@ from flyhighblog.users.forms import (RegistrationForm, LoginForm,
                                      RequestPasswordResetForm,
                                      PasswordResetForm)
 from flyhighblog.users.utils import (verify_reset_token,
-                                     send_email)
-from flyhighblog.main.utils import get_items
+                                     send_email,
+                                     profile_image,
+                                     profile_image_check_and_delete)
+from flyhighblog.main.utils import get_items 
 
 
 users = Blueprint('users', __name__)
@@ -157,46 +159,10 @@ def account():
 
                 # Checking if user already set profile image in the past.
                 # If yes, delete the old file from the database
-                if 'profile_img' in user:
-                    image = mongo.db.fs.files.find_one(
-                                                       {'filename':
-                                                        user['profile_img']}
-                                                       )
-                    image_id = image['_id']
-                    # Deleting file from fs.files
-                    mongo.db.fs.files.delete_one({'_id': ObjectId(image_id)})
-                    # Deleting file from fs.chunks
-                    mongo.db.fs.chunks.delete_many({'files_id':
-                                                    ObjectId(image_id)})
+                profile_image_check_and_delete(user)
 
-                # Create random filename while keeping original file extension
-                random_hex = secrets.token_hex(8)
-                profile_image = form.picture.data
-                _, f_ext = os.path.splitext(profile_image.filename)
-                picture_fn = random_hex + f_ext
-
-                # Set temporary path for profile pictures
-                picture_path = os.path.join(current_app.root_path,
-                                            'static/img/profile-image',
-                                            picture_fn)
-
-                # Resizing image
-                output_size = (125, 125)
-                i = Image.open(profile_image)
-                i.thumbnail(output_size)
-
-                # Saving resized image to temporary folder
-                i.save(picture_path)
-
-                # Open saved resized picture for read mode (r)
-                #   with binary I/O (b)
-                with open(picture_path, 'rb') as f:
-                    # Save resized picture to database
-                    mongo.save_file(picture_fn, f)
-
-                # Delete resized picture from temporaty folder
-                os.remove(picture_path)
-
+                # Resize and save picture to database
+                picture_fn = profile_image(form.picture.data)
                 # Save file name reference to user document
                 users.update({'_id': ObjectId(session['user_id'])},
                              {'$set': {

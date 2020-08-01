@@ -1,19 +1,15 @@
-# Importing os to have access to sytem-based functions and variables
-import os
-# Importing tool for generating secure random numbers
-import secrets
 from datetime import datetime
-# Importing tool for Image processing
-from PIL import Image
 # Importing required flask methods and functions
 from flask import (render_template, redirect, url_for, flash,
-                   session, request, abort, Blueprint, current_app)
+                   session, request, abort, Blueprint)
 # Importing Tools for working with MongoDB ObjectIds
 from bson.objectid import ObjectId
 from bson.errors import InvalidId
 # Importing variables from other application packages
 from flyhighblog import mongo
 from flyhighblog.posts.forms import PostForm, UpdatePostForm
+from flyhighblog.posts.utils import (post_picture,
+                                     post_picture_check_and_delete)
 
 
 posts = Blueprint('posts', __name__)
@@ -38,35 +34,8 @@ def new_post():
 
         # Check if form inputs are valid
         if form.validate_on_submit():
-            # Create random filename while keeping original file extension
-            random_hex = secrets.token_hex(8)
-            post_image = form.picture.data
-            _, f_ext = os.path.splitext(post_image.filename)
-            picture_fn = random_hex + f_ext
-
-            # Set temporary path for post pictures
-            picture_path = os.path.join(current_app.root_path,
-                                        'static/img/post-image',
-                                        picture_fn)
-
-            # Resizing image
-            basewidth = 1000
-            i = Image.open(post_image)
-            wpercent = (basewidth/float(i.size[0]))
-            hsize = int((float(i.size[1])*float(wpercent)))
-            i = i.resize((basewidth, hsize), Image.ANTIALIAS)
-
-            # Saving resized image to temporary folder
-            i.save(picture_path)
-
-            # Open saved resized picture for read mode (r)
-            #   with binary I/O (b)
-            with open(picture_path, 'rb') as f:
-                # Save resized picture to database
-                mongo.save_file(picture_fn, f)
-
-            # Delete resized picture from temporaty folder
-            os.remove(picture_path)
+            # Resize and save picture to database
+            picture_fn = post_picture(form.picture.data)
 
             # Save file name reference to post document
             post_doc = {
@@ -150,48 +119,10 @@ def update_post(post_id):
 
                 # Checking if user already inserted post picture in the past.
                 # If yes, delete the old file from the database
-                if 'picture' in post:
-                    image = mongo.db.fs.files.find_one(
-                                                       {'filename':
-                                                        post['picture']}
-                                                       )
-                    image_id = image['_id']
-                    # Deleting file from fs.files
-                    mongo.db.fs.files.delete_one({'_id': ObjectId(image_id)})
-                    # Deleting file from fs.chunks
-                    mongo.db.fs.chunks.delete_many({'files_id':
-                                                    ObjectId(image_id)})
+                post_picture_check_and_delete(post)
 
-                # Create random filename while keeping original file
-                #   extension
-                random_hex = secrets.token_hex(8)
-                post_image = form.picture.data
-                _, f_ext = os.path.splitext(post_image.filename)
-                picture_fn = random_hex + f_ext
-
-                # Set temporary path for post pictures
-                picture_path = os.path.join(current_app.root_path,
-                                            'static/img/post-image',
-                                            picture_fn)
-
-                # Resizing image
-                basewidth = 1000
-                i = Image.open(post_image)
-                wpercent = (basewidth/float(i.size[0]))
-                hsize = int((float(i.size[1])*float(wpercent)))
-                i = i.resize((basewidth, hsize), Image.ANTIALIAS)
-
-                # Saving resized image to temporary folder
-                i.save(picture_path)
-
-                # Open saved resized picture for read mode (r)
-                #   with binary I/O (b)
-                with open(picture_path, 'rb') as f:
-                    # Save resized picture to database
-                    mongo.save_file(picture_fn, f)
-
-                # Delete resized picture from temporaty folder
-                os.remove(picture_path)
+                # Resize and save picture to database
+                picture_fn = post_picture(form.picture.data)
 
                 # Save file name reference to post document
                 posts.update({'_id': ObjectId(post_id)},
@@ -253,17 +184,9 @@ def delete_post(post_id):
         if post['author'] != session['user_id']:
             abort(403)
 
-        if 'picture' in post:
-            image = mongo.db.fs.files.find_one(
-                                               {'filename':
-                                                post['picture']}
-                                               )
-            image_id = image['_id']
-            # Deleting file from fs.files
-            mongo.db.fs.files.delete_one({'_id': ObjectId(image_id)})
-            # Deleting file from fs.chunks
-            mongo.db.fs.chunks.delete_many({'files_id':
-                                            ObjectId(image_id)})
+        # Checking if user already inserted post picture in the past.
+        # If yes, delete the old file from the database
+        post_picture_check_and_delete(post)
 
         # Delete post from database
         mongo.db.posts.delete_one({'_id': ObjectId(post_id)})
