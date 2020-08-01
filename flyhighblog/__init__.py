@@ -32,9 +32,10 @@ def create_app(config_class=Config):
     from flyhighblog.main.routes import main
     from flyhighblog.posts.routes import posts
     from flyhighblog.users.routes import users
-
+    from flyhighblog.errors.handlers import errors
     app.register_blueprint(main)
     app.register_blueprint(posts)
     app.register_blueprint(users)
+    app.register_blueprint(errors)
 
     return app
