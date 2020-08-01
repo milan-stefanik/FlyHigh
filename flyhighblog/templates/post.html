@@ -9,7 +9,7 @@
 			<div class="col-12">
 				<div class="wrapper picture-wrapper">
 					{% if post['picture'] %}
-					<img class="rounded" src="{{ url_for('file', filename=post['picture']) }}" alt="Post Image">
+					<img class="rounded" src="{{ url_for('main.file', filename=post['picture']) }}" alt="Post Image">
                     {% else %}
 					<img class="rounded" src="{{url_for('static', filename='img/post-image/sample-image.jpg')}}" alt="Post Image">
                     {% endif %}
@@ -19,7 +19,7 @@
 		<div class="row post-content">
 			<div class="col profile-image-column">
 				{% if post['profile_image'] %}
-		    		<img class="rounded-circle post-account-img" src="{{ url_for('file', filename=post['profile_image']) }}" alt="Profile Image">
+		    		<img class="rounded-circle post-account-img" src="{{ url_for('main.file', filename=post['profile_image']) }}" alt="Profile Image">
                 {% else %}
 					<img class="rounded-circle post-account-img" src="{{ url_for('static', filename='img/profile-image/userimage.jpg') }}" alt="Profile Image">
                 {% endif %}
@@ -44,7 +44,7 @@
 			<div class="row">
 				<div class="col-6 change-buttons">
 					<a class="btn btn-outline-secondary btn-sm"
-						href="{{ url_for('update_post',  post_id=post._id) }}">Update</a>
+						href="{{ url_for('posts.update_post',  post_id=post._id) }}">Update</a>
 				</div>
 				<div class="col-6 change-buttons">
 					<button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#deleteModal">Delete</button>
@@ -82,7 +82,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-				<form action="{{ url_for('delete_post', post_id=post._id) }}" method="POST">
+				<form action="{{ url_for('posts.delete_post', post_id=post._id) }}" method="POST">
 					<input class="btn btn-outline-danger" type="submit" value="Delete">
                 </form>
 			</div>

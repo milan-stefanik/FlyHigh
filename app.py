@@ -1,7 +1,8 @@
 # Importing os to have access to sytem-based functions and variables
 import os
-# Importing app variable from flyhighblog folder from __init__.py
-from flyhighblog import app
+from flyhighblog import create_app
+
+app = create_app()
 
 # When running app.py module as main program Python assigns
 #   hard-coded string "__main__" to the __name__ variable

@@ -10,7 +10,7 @@
 			<div class="col-lg-8 col-12">
 				<div class="row date-author-line">
 					<div class="col-sm-6 col-12">
-                        <p><a class="post-link" href="{{ url_for('user_posts', username=post.username) }}"><i class="fas fa-feather-alt"></i> {{ post.first_name }} {{ post.last_name }} </a></p>
+                        <p><a class="post-link" href="{{ url_for('users.user_posts', username=post.username) }}"><i class="fas fa-feather-alt"></i> {{ post.first_name }} {{ post.last_name }} </a></p>
 					</div>
 					<div class="col-sm-6 col-12 date">
 						<p class="text-muted"><i class="far fa-calendar"></i> {{ post.date_posted.strftime('%d %B %Y') }}</p>
@@ -19,7 +19,7 @@
                 <hr>
                 <div class="row">
 					<div class="col-12">
-						<h5><a class="post-link" href="{{ url_for ('post', post_id=post._id)}}">{{ post.title.title() }}</a></h5>
+						<h5><a class="post-link" href="{{ url_for ('posts.post', post_id=post._id)}}">{{ post.title.title() }}</a></h5>
 					</div>
 				</div>
 				<div class="row">
@@ -32,14 +32,14 @@
 				</div>
                 <div class="row">
 					<div class="col-12">
-                        <p><a class="btn btn-outline-secondary button" href="{{ url_for ('post', post_id=post._id)}}"><small>Read more</small></a></p>
+                        <p><a class="btn btn-outline-secondary button" href="{{ url_for ('posts.post', post_id=post._id)}}"><small>Read more</small></a></p>
 					</div>
 				</div>
 			</div>
 		    <div class="col-lg-4 col-12">
 				<div class="wrapper">
 					{% if post['picture'] %}
-                        <img class="rounded" src="{{ url_for('file', filename=post['picture']) }}" alt="Post Image">
+                        <img class="rounded" src="{{ url_for('main.file', filename=post['picture']) }}" alt="Post Image">
 		            {% else %}
                         <img class="rounded" src="{{url_for('static', filename='img/post-image/sample-image.jpg')}}" alt="Post Image">
                     {% endif %}  

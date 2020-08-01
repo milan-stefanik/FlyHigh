@@ -4,7 +4,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 # Importing required field types
 from wtforms import (StringField, PasswordField,
-                     SubmitField, TextAreaField)
+                     SubmitField)
 # Importing field validators
 from wtforms.validators import (DataRequired, Length, Email,
                                 EqualTo, ValidationError)
@@ -91,27 +91,6 @@ class UpdateAccountForm(FlaskForm):
                     'Account with this e-mail address is already registered. '
                     'Please log in or create an account with different'
                     'e-mail address.')
-
-
-# Defining form for creating new post
-#   including form validation parameters
-class PostForm(FlaskForm):
-    title = StringField('Post Title', validators=[DataRequired()])
-    content = TextAreaField('Content', validators=[DataRequired()])
-    picture = FileField('Upload post picture',
-                        validators=[DataRequired(),
-                                    FileAllowed(['jpg', 'png', 'jpeg'])])
-    submit = SubmitField('Post')
-
-
-# Defining form for updating existing post
-#   including form validation parameters
-class UpdatePostForm(FlaskForm):
-    title = StringField('Post Title', validators=[DataRequired()])
-    content = TextAreaField('Content', validators=[DataRequired()])
-    picture = FileField('Change post picture',
-                        validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
-    submit = SubmitField('Update')
 
 
 # Defining form for requesting password reset

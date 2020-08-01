@@ -1,49 +1,40 @@
-# Importing os to have access to sytem-based functions and variables
-import os
 # Importing Flask application framework
 from flask import Flask
 # Importing tools for interacting with MongoDB
 from flask_pymongo import PyMongo
 # Importing flask-mail
 from flask_mail import Mail
-
-
-# Importing system-based variables in development environment
-# env.py file contains secrets and must be included in .gitignore file
-# When in development environment, env.py file needs
-#   to be uploaded to root folder.
-# When deployed, env.py is not present and application
-#   gets data directly from system-based variables
-from os import path
-if path.exists('env.py'):
-    import env
-
-# Creating Flask instance
-app = Flask(__name__)
-
-
-# Configuring Flask app to connect to MongoDB server
-# Information are pulled from env.py when in development environment
-# Information are pulled from system-based variables when deployed
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-app.config['MONGO_DBNAME'] = os.getenv('DB_NAME')
-app.config['MONGO_URI'] = os.getenv('MONGO_URI')
+from flyhighblog.config import Config
 
 
 # Setting the PyMongo application object
-mongo = PyMongo(app)
+mongo = PyMongo()
 
-# Setting email parameters
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = os.environ.get('EMAIL_USER')
-app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASS')
-mail = Mail(app)
+# Setting the flas-mail application object
+mail = Mail()
 
-# Importing routes.py from flyhighblog folder
+
 # Import is not on the top of file to avoid circular imports
 # Import must be done after declaring app variable
 # Warning "Module level import not at top of file" can be ignored"
-from flyhighblog import routes
+
+
+def create_app(config_class=Config):
+    # Creating Flask instance
+    app = Flask(__name__)
+    app.config.from_object(Config)
+
+    mongo.init_app(app)
+    mail.init_app(app)
+
+    # Importing particular routes.py files from respective subfolders
+    #   in flyhighblog folder
+    from flyhighblog.main.routes import main
+    from flyhighblog.posts.routes import posts
+    from flyhighblog.users.routes import users
+
+    app.register_blueprint(main)
+    app.register_blueprint(posts)
+    app.register_blueprint(users)
+
+    return app
