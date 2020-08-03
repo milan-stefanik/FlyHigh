@@ -3,6 +3,7 @@
 {% set active_page = "user_posts" %}
 {% block content %}
 <!-- Loop through the posts and generate list of posts -->
+<!-- Displaying first name, last name and number of posts written by given author -->
 <h1 class="mb-3">Posts by {{ first_name }} {{ last_name }} ({{ posts_count }})</h1>
 {% for post in posts %}
 <div class="media post">
@@ -11,21 +12,25 @@
 			<div class="col-lg-8 col-12">
 				<div class="row date-author-line">
 					<div class="col-sm-6 col-12">
+                        <!-- Post author first name and last name -->
                         <p><i class="fas fa-feather-alt"></i> {{ post.first_name }} {{ post.last_name }} </p>
 					</div>
 					<div class="col-sm-6 col-12 date">
-						<p class="text-muted"><i class="far fa-calendar"></i> {{ post.date_posted.strftime('%d %B %Y') }}</p>
+						<!-- Date the post was created -->
+                        <p class="text-muted"><i class="far fa-calendar"></i> {{ post.date_posted.strftime('%d %B %Y') }}</p>
 					</div>
 				</div>
                 <hr>
                 <div class="row">
 					<div class="col-12">
-						<h5><a class="post-link" href="{{ url_for ('posts.post', post_id=post._id)}}">{{ post.title.title() }}</a></h5>
+						<!-- Post title -->
+                        <h5><a class="post-link" href="{{ url_for ('posts.post', post_id=post._id)}}">{{ post.title.title() }}</a></h5>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-12 content-container">
                         <div class="content-box">
+                            <!-- Post content -->
                             <p class="content">{{ post.content }}</p>
                         </div>
                         <div class="content-overlay"></div>
@@ -33,13 +38,15 @@
 				</div>
                 <div class="row">
 					<div class="col-12">
+                        <!-- Read more button with link to corresponding post -->
                         <p><a class="btn btn-outline-secondary button" href="{{ url_for ('posts.post', post_id=post._id)}}"><small>Read more</small></a></p>
 					</div>
 				</div>
 			</div>
 		    <div class="col-lg-4 col-12">
 				<div class="wrapper">
-					{% if post['picture'] %}
+					<!-- If respective post picture is found in database, picture is displayed. Otherwise, default static picture is displayed. -->
+                    {% if post['picture'] %}
                         <img class="rounded" src="{{ url_for('main.file', filename=post['picture']) }}" alt="Post Image">
 		            {% else %}
                         <img class="rounded" src="{{url_for('static', filename='img/post-image/sample-image.jpg')}}" alt="Post Image">
@@ -51,7 +58,7 @@
 </div>
 
 {% endfor %}
-
+<!-- Pagination links -->
 {{ pagination.links }}
 
 {% endblock content %}

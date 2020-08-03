@@ -6,6 +6,7 @@
 	<div class="media-body">
 		<div class="row">
             <div class="col account-image">
+                <!-- If user changed profile image, diplay changed image. Otherwise, display static default profile image. -->
                 {% if user['profile_img'] %}
                     <img class="rounded-circle account-img" src="{{ url_for('main.file', filename=user['profile_img']) }}" alt="Profile Image">
                 {% else %}
@@ -14,7 +15,9 @@
             </div>        
             <div class="col col-12 col-sm-7">
                 <div class="media-body account-title">
+                    <!-- User first name and last name -->
                     <h2 class="account-heading">{{ user['first_name'].title() }} {{ user['last_name'].title() }}</h2>
+                    <!-- User email -->
                     <p>{{ user['email'] }}</p>
                     <br>
                     <br>
@@ -22,9 +25,10 @@
             </div>
         </div>
 	</div>
-	<!-- UPDATE ACCOUNT FORM -->
+	<!-- UPDATE ACCOUNT DETAILS FORM -->
 	<div>
-		<form method="POST" action="" novalidate enctype="multipart/form-data">
+		<!-- novalidate enctype="multipart/form-data" is required for forms with file upload control -->
+        <form method="POST" action="" novalidate enctype="multipart/form-data">
 			{{ form.hidden_tag() }}
 			<fieldset class="form-group">
 				<legend class="border-bottom mb-4">Account Info</legend>
@@ -101,6 +105,7 @@
 					<!-- Picture input - label -->
 					{{ form.picture.label() }}
                     {{ form.picture(class="form-control-file") }}
+                    <!-- If information is invalid, provide user with corresponding feedback -->
                     {% if form.picture.errors %}
                         {% for error in form.picture.errors %}
 						<span class="text-danger">{{ error }}</span><br>

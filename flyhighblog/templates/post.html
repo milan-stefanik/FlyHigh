@@ -8,7 +8,8 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="wrapper picture-wrapper">
-					{% if post['picture'] %}
+					<!-- If respective post picture is found in database, picture is displayed. Otherwise, default static picture is displayed. -->
+                    {% if post['picture'] %}
 					<img class="rounded" src="{{ url_for('main.file', filename=post['picture']) }}" alt="Post Image">
                     {% else %}
 					<img class="rounded" src="{{url_for('static', filename='img/post-image/sample-image.jpg')}}" alt="Post Image">
@@ -18,7 +19,8 @@
 		</div>
 		<div class="row post-content">
 			<div class="col profile-image-column">
-				{% if post['profile_image'] %}
+				<!-- If user changed profile image, diplay changed image. Otherwise, display static default profile image. -->
+                {% if post['profile_image'] %}
 		    		<img class="rounded-circle post-account-img" src="{{ url_for('main.file', filename=post['profile_image']) }}" alt="Profile Image">
                 {% else %}
 					<img class="rounded-circle post-account-img" src="{{ url_for('static', filename='img/profile-image/userimage.jpg') }}" alt="Profile Image">
@@ -28,19 +30,23 @@
 				<div class="row row-meta">
 					<div class="col-12">
 						<p><a class="author-link" href="#"><i class="fas fa-feather-alt"></i>
-								{{ post.first_name }} {{ post.last_name }}
+								<!-- First name and last name -->
+                                {{ post.first_name }} {{ post.last_name }}
 							</a></p>
 					</div>
 				</div>
 				<div class="row row-meta">
 					<div class="col-12">
 						<p class="text-muted"><i class="far fa-calendar"></i>
-							{{ post.date_posted.strftime('%d %B %Y') }}</p>
+							<!-- Date the post was created -->
+                            {{ post.date_posted.strftime('%d %B %Y') }}</p>
 					</div>
 				</div>
 			</div>
 		</div>
-		{% if post.author == session['user_id'] %}
+		<!-- If logged user is author of the post, display UPDATE and DELETE buttons -->
+        <!-- Delete action needs to be reconfirmed - modal message is displayed -->
+        {% if post.author == session['user_id'] %}
 			<div class="row">
 				<div class="col-6 change-buttons">
 					<a class="btn btn-outline-secondary btn-sm"
@@ -59,10 +65,12 @@
 
 		<div class="row post-text">
 			<div class="col-12">
-				<h5>{{ post.title.title() }}</h5>
+				<!-- Post title -->
+                <h5>{{ post.title.title() }}</h5>
 			</div>
 			<div class="col-12">
-				<p>{{ post.content }}</p>
+				<!-- Post content -->
+                <p>{{ post.content }}</p>
 			</div>
 		</div>
 

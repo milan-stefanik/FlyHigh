@@ -54,14 +54,15 @@
 								Authors
 							</a>
 							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-								{% for user in users_all %}
+								<!-- Generating dropdown list based on registered user stored in database -->
+                                {% for user in users_all %}
                                     <a class="dropdown-item" href="{{ url_for('users.user_posts', username=user.username) }}">{{ user.first_name }} {{ user.last_name }}</a>
                                 {% endfor %}
 							</div>
 						</li>
 					</ul>
 					<ul class="navbar-nav mt-2 mt-lg-0">
-						<!-- Displaying links corresponding to user status (authenticated/logged out) -->
+						<!-- Displaying links corresponding to user status (authenticated/logged out), active class is assigned based on displayed template -->
                         {% if 'user_id' in session %}
                             <li class="nav-item">
                                 <a class="nav-link {{ 'active' if active_page == 'new_post' else 'hvr-underline-from-left' }}" href="{{ url_for('posts.new_post') }}">New Post</a>
@@ -116,11 +117,12 @@
 		</div>
 	</div>
 
-      <!-- ======= Footer ======= -->
+  <!-- --------FOOTER------------ -->
   <footer>
     <div class="footer-area">
       <div class="container">
         <div class="row">
+          <!-- The first footer column -->
           <div class="col-md-4 col-sm-4 col-xs-12">
             <div class="footer-content">
               <div class="footer-head">
@@ -149,7 +151,7 @@
               </div>
             </div>
           </div>
-          <!-- end single footer -->
+          <!-- The second footer column -->
           <div class="col-md-4 col-sm-4 col-xs-12">
             <div class="footer-content">
               <div class="footer-head">
@@ -163,15 +165,15 @@
               </div>
             </div>
           </div>
-          <!-- end single footer -->
+          <!-- The third footer column -->
           <div class="col-md-4 col-sm-4 col-xs-12">
             <div class="footer-content">
               <div class="footer-head">
                 <h4>Flicker</h4>
                 <div class="flicker-img">
-                  <a href="https://www.flickr.com/" target="_blank"><img src="{{ url_for('static', filename='img/flicker/1.jpg') }}" alt=""></a>
-                  <a href="https://www.flickr.com/" target="_blank"><img src="{{ url_for('static', filename='img/flicker/2.jpg') }}" alt=""></a>
-                  <a href="https://www.flickr.com/" target="_blank"><img src="{{ url_for('static', filename='img/flicker/3.jpg') }}" alt=""></a>
+                  <a href="https://www.flickr.com/" target="_blank"><img src="{{ url_for('static', filename='img/flicker/1.jpg') }}" alt="Flicker image thumbnail"></a>
+                  <a href="https://www.flickr.com/" target="_blank"><img src="{{ url_for('static', filename='img/flicker/2.jpg') }}" alt="Flicker image thumbnail"></a>
+                  <a href="https://www.flickr.com/" target="_blank"><img src="{{ url_for('static', filename='img/flicker/3.jpg') }}" alt="Flicker image thumbnail"></a>
                 </div>
               </div>
             </div>
@@ -193,7 +195,7 @@
         </div>
       </div>
     </div>
-  </footer><!-- End  Footer -->
+  </footer>
 
 	<!-- Bootstrap JavaScript -->
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

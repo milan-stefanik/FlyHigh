@@ -46,6 +46,7 @@
 					<!-- Picture input - label -->
 					{{ form.picture.label() }}
                     {{ form.picture(class="form-control-file") }}
+                    <!-- If information is invalid, provide user with corresponding feedback -->
                     {% if form.picture.errors %}
                         {% for error in form.picture.errors %}
 						<span class="text-danger">{{ error }}</span><br>
