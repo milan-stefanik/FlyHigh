@@ -17,7 +17,8 @@ from flyhighblog.posts.utils import (post_picture,
 posts = Blueprint('posts', __name__)
 
 
-# Setting new variable to the context of templates - can be used in the base.html.
+# Setting new variable to the context of templates - can be used
+#   in the base.html
 # users_all variable is used to generate list of authors for navbar
 @posts.context_processor
 def context_processor():
@@ -28,7 +29,7 @@ def context_processor():
     return dict(users_all=users)
 
 
-# Route for rendering New Post form; accessible only for 
+# Route for rendering New Post form; accessible only for
 #   registered and logged users
 @posts.route('/post/new', methods=['GET', 'POST'])
 def new_post():
@@ -41,7 +42,7 @@ def new_post():
 
         # Check if form inputs are valid
         if form.validate_on_submit():
-            
+
             # Resize and save picture to database
             picture_fn = post_picture(form.picture.data)
 
@@ -67,8 +68,8 @@ def new_post():
     #   user's intention so as the corresponding page can be displayed after
     #   successful login.
     else:
-        # Flash message informing user about the need to be logged in to be able
-        #   to create a new post.
+        # Flash message informing user about the need to be logged in
+        #   to be able to create a new post.
         flash('Please login to access this page.', 'info')
         # Redirect to log-in page
         return redirect(url_for('users.login', next=request.endpoint))
@@ -102,7 +103,7 @@ def post(post_id):
     return render_template('post.html', title=post['title'], post=post)
 
 
-# Route for rendering Update Post form; accessible only for 
+# Route for rendering Update Post form; accessible only for
 #   registered and logged users
 # Post can be updated only by its author
 @posts.route('/post/<post_id>/update',  methods=['GET', 'POST'])
@@ -177,14 +178,14 @@ def update_post(post_id):
     #   user's intention so as the corresponding page can be displayed after
     #   successful login.
     else:
-        # Flash message informing user about the need to be logged in to be able
-        #   to update existing post.
+        # Flash message informing user about the need to be logged
+        #   in to be able to update existing post.
         flash('Please login to access this page.', 'info')
         # Redirect to login page
         return redirect(url_for('users.login', next=request.endpoint))
 
 
-# Route for deleting post ; accessible only for 
+# Route for deleting post; accessible only for
 #   registered and logged users
 # Post can be deleted only by its author
 @posts.route("/post/<post_id>/delete", methods=['POST'])
@@ -217,15 +218,15 @@ def delete_post(post_id):
 
         # Flash message informing user that the post was deleted
         flash('Post has been deleted.', 'success')
-        
+
         # Redirect to index.html
         return redirect(url_for('main.index'))
     # If user is not logged in, redirect to login.html and save info about
     #   user's intention so as the corresponding page can be displayed after
     #   successful login.
     else:
-        # Flash message informing user about the need to be logged in to be able
-        #   to delete post.
+        # Flash message informing user about the need to be logged in
+        #   to be able to delete post.
         flash('Please login to access this page.', 'info')
         # Redirect to login page
         return redirect(url_for('users.login', next=request.endpoint))

@@ -8,7 +8,7 @@ from wtforms import (StringField, PasswordField,
 # Importing field validators
 from wtforms.validators import (DataRequired, Length, Email,
                                 EqualTo, ValidationError)
-# Importing mongo for validating duplicated username/email during 
+# Importing mongo for validating duplicated username/email during
 #   registration and user account info update
 from flyhighblog import mongo
 # Importing Tools for working with MongoDB ObjectIds
@@ -28,7 +28,7 @@ class RegistrationForm(FlaskForm):
     email = StringField('E-mail',
                         validators=[DataRequired(), Email()])
     password = PasswordField('Password',
-                             validators=[DataRequired()])
+                             validators=[DataRequired(), Length(min=8)])
     confirm_password = PasswordField('Confirm Password',
                                      validators=[DataRequired(),
                                                  EqualTo('password')])
@@ -114,7 +114,7 @@ class RequestPasswordResetForm(FlaskForm):
 #   including form validation parameters
 class PasswordResetForm(FlaskForm):
     password = PasswordField('Password',
-                             validators=[DataRequired()])
+                             validators=[DataRequired(), Length(min=8)])
     confirm_password = PasswordField('Confirm Password',
                                      validators=[DataRequired(),
                                                  EqualTo('password')])

@@ -13,7 +13,8 @@ from flyhighblog.main.utils import get_items
 main = Blueprint('main', __name__)
 
 
-# Setting new variable to the context of templates - and can be used in the base.html.
+# Setting new variable to the context of templates - and can be used
+#   in the base.html.
 # users_all variable is used to generate list of authors for navbar
 @main.context_processor
 def context_processor():
@@ -29,7 +30,7 @@ def context_processor():
 @main.route('/index')
 def index():
     # Posts data is pulled from database and sorted by date in descending
-    #   order 
+    #   order
     posts = mongo.db.posts.find().sort('date_posted', -1)
 
     # Converting MongoDB object to list of dictionaries
