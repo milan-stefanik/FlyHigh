@@ -26,7 +26,7 @@ def post_picture(form_picture_data):
                                 'static/img/post-image',
                                 picture_fn)
 
-    # Resizing image
+    # Resizing image - width 1000, aspect ratio kept
     basewidth = 1000
     i = Image.open(post_image)
     wpercent = (basewidth/float(i.size[0]))
@@ -45,6 +45,7 @@ def post_picture(form_picture_data):
     # Delete resized picture from temporaty folder
     os.remove(picture_path)
 
+    # Return picture filename
     return picture_fn
 
 

@@ -9,11 +9,15 @@ from flyhighblog import mongo
 from flyhighblog.main.utils import get_items
 
 
+# Creating Blueprint object
 main = Blueprint('main', __name__)
 
 
+# Setting new variable to the context of templates - and can be used in the base.html.
+# users_all variable is used to generate list of authors for navbar
 @main.context_processor
 def context_processor():
+    # Users data is pulled from database and sorted by their first name
     users = mongo.db.users.find().sort('first_name')
     # Converting MongoDB object to list of dictionaries
     users = [dict(user) for user in users]
@@ -24,6 +28,8 @@ def context_processor():
 @main.route('/')
 @main.route('/index')
 def index():
+    # Posts data is pulled from database and sorted by date in descending
+    #   order 
     posts = mongo.db.posts.find().sort('date_posted', -1)
 
     # Converting MongoDB object to list of dictionaries

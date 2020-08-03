@@ -17,6 +17,7 @@ from flyhighblog import mongo, mail
 
 
 # Function for generating password reset token
+# Validity of token = 30 minutes
 def get_reset_token(user, expires_sec=1800):
     s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
     return s.dumps({'user_id': str(user['_id'])}).decode('utf-8')
@@ -79,6 +80,7 @@ def profile_image(form_picture_data):
     # Delete resized picture from temporaty folder
     os.remove(picture_path)
 
+    # Return picture filename
     return picture_fn
 
 

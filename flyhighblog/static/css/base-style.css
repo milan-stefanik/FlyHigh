@@ -1,3 +1,5 @@
+/* ----------------------Style for base.html template ------------------------------------------------  */
+
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
 
 /* -----------------------BODY--------------------------- */
@@ -103,11 +105,11 @@ body {
 }
 
 .footer-icons ul {
-    padding-inline-start: 0;
+    padding: 0;
 }
 
 .footer-icons ul li a {
-    border: 1px solid rgb(255, 255, 255);
+    border: 1px solid rgb(254, 254, 254);
     color: rgb(80, 80, 80);
     background-color: rgb(255, 255, 255);
     display: block;
@@ -125,7 +127,7 @@ body {
 
 .footer-icons ul li a:hover {
     background: rgb(150,150,150);
-    border: 1px solid rgb(150,150,150);
+    border: 1px solid rgb(151,151,151);
     color: #fff;
 }
 

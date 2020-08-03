@@ -1,3 +1,4 @@
+# Importing os to have access to sytem-based functions and variables
 import os
 
 # Importing system-based variables in development environment
@@ -10,10 +11,8 @@ from os import path
 if path.exists('env.py'):
     import env
 
+# Defining application configruation information
 class Config:
-    # Configuring Flask app to connect to MongoDB server
-    # Information are pulled from env.py when in development environment
-    # Information are pulled from system-based variables when deployed
     SECRET_KEY = os.getenv('SECRET_KEY')
     MONGO_DBNAME = os.getenv('DB_NAME')
     MONGO_URI = os.getenv('MONGO_URI')

@@ -6,7 +6,6 @@ from flask_wtf.file import FileField, FileAllowed
 from wtforms import (StringField, SubmitField, TextAreaField)
 # Importing field validators
 from wtforms.validators import (DataRequired)
-# Importing mongo for validating duplicated username/email during registration
 
 
 # Defining form for creating new post
@@ -14,6 +13,7 @@ from wtforms.validators import (DataRequired)
 class PostForm(FlaskForm):
     title = StringField('Post Title', validators=[DataRequired()])
     content = TextAreaField('Content', validators=[DataRequired()])
+    # For new post, uploading picture is required
     picture = FileField('Upload post picture',
                         validators=[DataRequired(),
                                     FileAllowed(['jpg', 'png', 'jpeg'])])
@@ -25,6 +25,8 @@ class PostForm(FlaskForm):
 class UpdatePostForm(FlaskForm):
     title = StringField('Post Title', validators=[DataRequired()])
     content = TextAreaField('Content', validators=[DataRequired()])
+    # When updating post, if picture is not changed, originally uploaded
+    #   picture is kept
     picture = FileField('Change post picture',
                         validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
     submit = SubmitField('Update')

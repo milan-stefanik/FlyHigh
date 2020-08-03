@@ -1,5 +1,6 @@
 # Importing os to have access to sytem-based functions and variables
 import os
+# Importing create_app function
 from flyhighblog import create_app
 
 app = create_app()

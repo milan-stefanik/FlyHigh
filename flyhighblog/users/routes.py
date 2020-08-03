@@ -1,17 +1,10 @@
-# Importing os to have access to sytem-based functions and variables
-import os
-# Importing tool for generating secure random numbers
-import secrets
-from PIL import Image
 # Importing required flask methods and functions
 from flask import (render_template, redirect, url_for, flash, session, request,
-                   Blueprint, current_app)
+                   Blueprint)
 # Importing Werkzeug Security Functions
 from werkzeug.security import generate_password_hash, check_password_hash
 # Importing Tools for working with MongoDB ObjectIds
 from bson.objectid import ObjectId
-# Importing Flask pagination function
-from flask_paginate import Pagination
 # Importing variables from other application packages
 from flyhighblog import mongo
 from flyhighblog.users.forms import (RegistrationForm, LoginForm,
@@ -25,11 +18,15 @@ from flyhighblog.users.utils import (verify_reset_token,
 from flyhighblog.main.utils import get_items 
 
 
+# Creating Blueprint object
 users = Blueprint('users', __name__)
 
 
+# Setting new variable to the context of templates - can be used in the base.html.
+# users_all variable is used to generate list of authors for navbar
 @users.context_processor
 def context_processor():
+    # Users data is pulled from database and sorted by their first name
     users = mongo.db.users.find().sort('first_name')
     # Converting MongoDB object to list of dictionaries
     users = [dict(user) for user in users]
@@ -91,7 +88,7 @@ def login():
     form = LoginForm()
 
     # Validate passed login information,
-    #   use Flask flash to render respective message (passed/failed)
+    #   use Flask flash to render respective message
     #   and redirect to index.html
     if form.validate_on_submit():
         user = mongo.db.users.find_one({'email': form.email.data.lower()})
@@ -100,6 +97,7 @@ def login():
         #   database
         if user and check_password_hash(user['password'],
                                         form.password.data):
+            
             # Saving 'user_id' into session cookie
             session['user_id'] = str(user['_id'])
 
@@ -141,6 +139,8 @@ def logout():
     return redirect(url_for('main.index'))
 
 
+# Route for editing user's info; accessible only for registered and
+#   logged users, user can edit only own account information
 @users.route("/account", methods=['GET', 'POST'])
 def account():
     # If user is logged in (i.e. 'user_id' is in session),
@@ -152,6 +152,8 @@ def account():
         form = UpdateAccountForm()
         user = mongo.db.users.find_one({'_id': ObjectId(session['user_id'])})
         users = mongo.db.users
+        
+        # Check if form inputs are valid
         if form.validate_on_submit():
 
             # Checking if there are picture data in the form
@@ -163,6 +165,7 @@ def account():
 
                 # Resize and save picture to database
                 picture_fn = profile_image(form.picture.data)
+                
                 # Save file name reference to user document
                 users.update({'_id': ObjectId(session['user_id'])},
                              {'$set': {
@@ -170,7 +173,7 @@ def account():
                              }
                              })
 
-            # Update only those used details that have been changed
+            # Update only those user details that have been changed
             # All other details shall remain same
             users.update({'_id': ObjectId(session['user_id'])},
                          {'$set': {
@@ -201,13 +204,17 @@ def account():
     #   user's intention so as the corresponding page can be displayed after
     #   successful login.
     else:
+        # Flash message informing user about the need to be logged in to be able
+        #   to edit account information.
         flash('Please login to access this page.', 'info')
+         # Redirect to log-in page
         return redirect(url_for('users.login', next=request.endpoint))
 
 
 # Route for displaying posts written by particular users
 @users.route('/user/<string:username>')
 def user_posts(username):
+    # Filtering posts saved in database by username
     user = mongo.db.users.find_one({'username': username})
     user_id = str(user['_id'])
     first_name = user['first_name'].title()
@@ -259,41 +266,67 @@ def reset_request():
     if 'user_id' in session:
         # If user logged in, redirect to index.html
         return redirect(url_for('main.index'))
+    
+    # Defining form variable - RequestPasswordResetForm
     form = RequestPasswordResetForm()
+    
+    # Check if form inputs are valid
     if form.validate_on_submit():
+        # Find user by e-mail address
         user = mongo.db.users.find_one({'email': form.email.data})
+        # Send password reset instructions to user's e-mail
         send_email(user)
+        # Flash message informing that e-mail with password reset instructions 
+        #   has been sent.
         flash('An e-mail with password reset instructions has been sent.',
               'info')
+        # Redirect to log-in page
         return redirect(url_for('users.login'))
+    # Render password reset request form
     return render_template('reset_request.html',
                            title='Reset Password', form=form)
 
 
-# Route for reseting password
+# Route for reseting password; accessed via link sent to user by e-mail
 @users.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_password(token):
     # Checking if user is logged in.
     if 'user_id' in session:
         # If user logged in, redirect to index.html
         return redirect(url_for('main.index'))
+    
+    # Verify, if token in the link is valid
     user = verify_reset_token(token)
     user_id = str(user['_id'])
     users = mongo.db.users
     if user_id is None:
         flash('Token is invalid or expired!', 'warning')
+        # If the token is invalid, redirect to request password reset page
         return redirect(url_for('users.reset_request'))
+    
+    # Defining form variable - PasswordResetForm
     form = PasswordResetForm()
+    
+    # Check if form inputs are valid
     if form.validate_on_submit():
+        
+        # Hashing the password
         hashpass = generate_password_hash(form.password.data)
-        # Save file name reference to user document
+        
+        # Update password data in the database
         users.update({'_id': ObjectId(user_id)},
                      {'$set': {
                                'password': hashpass,
                               }
                      })
+        
+        # Flash message informing that password has been changed.
         flash('Your password has been updated! You are now able to log in',
               'success')
+        
+        # Redirect to login page
         return redirect(url_for('users.login'))
+    
+    # Render password reset page
     return render_template('reset_password.html',
                            title='Reset Password', form=form)

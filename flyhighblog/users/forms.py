@@ -8,7 +8,8 @@ from wtforms import (StringField, PasswordField,
 # Importing field validators
 from wtforms.validators import (DataRequired, Length, Email,
                                 EqualTo, ValidationError)
-# Importing mongo for validating duplicated username/email during registration
+# Importing mongo for validating duplicated username/email during 
+#   registration and user account info update
 from flyhighblog import mongo
 # Importing Tools for working with MongoDB ObjectIds
 from bson.objectid import ObjectId
@@ -23,7 +24,7 @@ class RegistrationForm(FlaskForm):
     lastname = StringField('Last Name',
                            validators=[DataRequired(), Length(min=2, max=25)])
     username = StringField('Username',
-                           validators=[DataRequired(), Length(min=2, max=20)])
+                           validators=[DataRequired(), Length(min=2, max=25)])
     email = StringField('E-mail',
                         validators=[DataRequired(), Email()])
     password = PasswordField('Password',
@@ -49,7 +50,7 @@ class RegistrationForm(FlaskForm):
                 'e-mail address.')
 
 
-# Defining form for user login including from validation parameters
+# Defining form for user login including form validation parameters
 class LoginForm(FlaskForm):
     email = StringField('E-mail',
                         validators=[DataRequired(), Email()])
