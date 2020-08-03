@@ -97,7 +97,10 @@ def post(post_id):
     #   specific data
     post['first_name'] = user['first_name'].title()
     post['last_name'] = user['last_name'].title()
-    post['profile_image'] = user['profile_img']
+    if 'profile_img' in user:
+        post['profile_image'] = user['profile_img']
+    else:
+        post['profile_image'] = None
 
     # Rendering post.html
     return render_template('post.html', title=post['title'], post=post)
