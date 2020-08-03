@@ -300,12 +300,13 @@ def reset_password(token):
 
     # Verify, if token in the link is valid
     user = verify_reset_token(token)
-    user_id = str(user['_id'])
-    users = mongo.db.users
-    if user_id is None:
+    if user is None:
         flash('Token is invalid or expired!', 'warning')
         # If the token is invalid, redirect to request password reset page
         return redirect(url_for('users.reset_request'))
+
+    user_id = str(user['_id'])
+    users = mongo.db.users
 
     # Defining form variable - PasswordResetForm
     form = PasswordResetForm()
@@ -321,7 +322,7 @@ def reset_password(token):
                      {'$set': {
                                'password': hashpass,
                               }
-                     })
+                      })
 
         # Flash message informing that password has been changed.
         flash('Your password has been updated! You are now able to log in',
