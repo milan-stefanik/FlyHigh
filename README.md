@@ -4,7 +4,7 @@ Code Institute - Third Milestone Project: Data Centric Development
 The blogging application was developed for authors wanting to share their opinions and experience from the field of civil aviation, and for the readers craving for the latest aviation news.
 
 ## Demo
-A live demo of the website has been developed  [here](http://fly-high-blog.herokuapp.com/).
+A live demo of the website has been developed [here](http://fly-high-blog.herokuapp.com/).
 
 ![Responsive Web Demo](https://github.com/milan-stefanik/FlyHigh/blob/master/readme/demo.gif "Responsive Web Demo")
 
@@ -19,7 +19,7 @@ Responsive Web Demo GIF image was recorded using [Am I Responsive?](http://ami.r
 * User can access home page with a list of published posts.
 * User can read published posts.
 * User can filter posts by author (either through links in navigation bar or by clicking on post's author name).
-* User can register and thus become a registered user (either trhough a link in navigation bar or by means of Login page).
+* User can register and thus become a registered user (either through a link in navigation bar or by means of Login page).
 * User is not allowed to access restricted area of the website (i.e. edit user account information or create, update or delete posts).
 * User cannot reset password (in an attempt to do so, user will be asked to register).
 * When trying to access restricted area, user is redirected to Login page.
@@ -109,12 +109,13 @@ Responsive Web Demo GIF image was recorded using [Am I Responsive?](http://ami.r
 
 ### Strategy
 
-The FlyHigh blogging application was designed while keeping both computer and mobile devices users in mind. 
+The FlyHigh blogging application was designed while keeping both computer and mobile device users in mind. 
 In order to achieve a positive user experience principles for minimalistic and defensive web design were applied.
 
 ### Scope
 
-Demonstration of CRUD (Create, Read, Update and Delete) functionalities at the level of blog posts while applying basic business logic (i.e. user managment). 
+Demonstration of CRUD (Create, Read, Update and Delete) functionalities at the level of blog posts while applying basic business logic (i.e. user managment).
+At user level, only CRU functionalities are available. 
 
 ### Skeleton
 [Website wireframe](https://github.com/milan-stefanik/FlyHigh/blob/master/readme/Wireframe.pdf)
@@ -154,7 +155,7 @@ Greyscale color scheme.
 * Responsive design
 * Flask Blueprint powered application modularity
 * MongoDB powered back-end
-* Comprehensive User managment
+* Comprehensive User management
 * User accounts CRU functions
 * Blog posts CRUD functions
 * Password reset via e-mail
@@ -183,11 +184,16 @@ Greyscale color scheme.
 * There was a problem with displaying author's name in the posts. The problem was solved by converting MongoDB object to list of dictionaries.
 * Flask-Login powered user manamement did not work properly with PyMongo. The problem was solved by implementation of Flask Session based user managment instead of using Flask-Login.
 
+### Data consistency in database
+* Data stored in database were checked manually after every change through application user interface to assure data quality and consistency.
+
+#### Discovered bugs and drawbacks
+* As MongoDB is not a relational database, the issues with DELETE and UPDATE cascading had to be solved programatically.
 
 ### Browsers and devices
-* Responsiveness  has been tested using Inspect feature of Chrome and also on [Am I Responsive?](http://ami.responsivedesign.is) website.
+* Responsiveness has been tested using Inspect feature of Chrome and also on [Am I Responsive?](http://ami.responsivedesign.is) website.
 * Website has been tested on iPhone XS plus using Chrome and Safari browsers. Other mobile devices screen sizes were emulated via Chrome Inspect feature.
-* Website has been tested on multiple browsers in Windows (Chrome, Opera, Edge, Firefox) and multiple browsers in MacOs (Safari and Chrome). Firefox had problems with flip card css feature, the problem has been solved. Game does not support Internet Explorer. 
+* Website has been tested on multiple browsers in Windows (Chrome, Opera, Edge, Firefox and Internet Explorer) and multiple browsers in MacOs (Safari and Chrome).
 
 #### Discovered bugs and drawbacks
 * Post content is saved to MongoDB as string. To display post pararagraps as defined by the author, CSS property "white-space: break-spaces" is used. Then the text is justified using "text-align" and "text-align-last" properties. The text-alignment is correctly displayed in all browsers with exception of MacOs Safari and iOS Safari and Chrome. In these browsers, text is aligned to left.
@@ -203,6 +209,15 @@ In order to make sure the deployed application works correctly:
 * Debug mode in app.py needs to be switched off (i.e. debug=False) in app.py
 * env.py containg required secrets needs to be included in .gitignore file so as the secrets are not exposed
 
+To run locally, repository can be cloned directly into the chosen editor by pasting `git clone https://github.com/milan-stefanik/FlyHigh.git` into terminal. To cut ties with this GitHub repository, `git remote rm origin` shall be used. Python3 and all python packages listed in requirements.txt need to be installed. It is recommended to install required python packages and run the application in virtual environment. Environment variables need to be set before running the application.
+
+## Futher Development
+Thanks to Flask Blueprint, FlyHigh blog application is easily scalable and modular. This allow adding other functionalities in the future.
+
+Following functionalities could be added in the future:
+* Post comment section allowing readers to leave a comment under each post.
+* Full text search.
+* Implementation of post tags and post categories.
 
 ## Credits
 
@@ -218,27 +233,33 @@ The listed posts are only for demonstration purposes and were copied from follow
 * Copa Airlines aims to restart operations in early September [www.reuters.com](https://www.reuters.com/article/us-copa-holdings-panama/copa-airlines-aims-to-restart-operations-in-early-september-idUSKCN24T07J)
 * Portugal's TAP aims to resume 40 pct of flights in September [www.xinhuanet.com](http://www.xinhuanet.com/english/2020-07/27/c_139244244.htm)
 * Passengers of Air France flights to Bengaluru to undergo COVID-19 test [in.news.yahoo.com](https://in.news.yahoo.com/passengers-air-france-flights-bengaluru-undergo-covid-19-090412703.html)
+* Airline slot waivers need strict conditions: ACI World chief [www.flightglobal.com](https://www.flightglobal.com/networks/airline-slot-waivers-need-strict-conditions-aci-world-chief/139480.article)
+* Delta Targets Virus Tests for All Employees in Next Four Weeks [www.bloomberg.com](https://www.bloomberg.com/news/articles/2020-07-23/delta-targets-virus-tests-for-all-employees-in-next-four-weeks)
+* Emirates covers customers from COVID-19 expenses, in industry-leading initiative to boost travel confidence [www.emirates.com](https://www.emirates.com/media-centre/emirates-covers-customers-from-covid-19-expenses-in-industry-leading-initiative-to-boost-travel-confidence/)
+* Southwest posts $915 million loss, warns travel demand will remain weak without coronavirus vaccine [www.cnbc.com/](https://www.cnbc.com/2020/07/23/southwest-airlines-luv-posts-second-quarter-loss.html)
+* American Airlines posts $2.1 billion net loss in second quarter [www.cnbc.com](https://www.cnbc.com/2020/07/23/american-airlines-aal-posts-2point1-billion-loss-in-second-quarter-warns-on-coronavirus.html)
+* Emirates offers pilots, cabin crew four months unpaid leave [www.reuters.com](https://www.reuters.com/article/us-health-coronavirus-emirates-airline/emirates-offers-pilots-cabin-crew-four-months-unpaid-leave-idUSKCN24O1D4?il=0)
+* Uncertain future for airlines amid COVID-19 crisis [www.ktvu.com](https://www.ktvu.com/news/uncertain-future-for-airlines-amid-covid-19-crisis)
+* United CEO: We won't be 'anywhere close to normal' until there's vaccine [edition.cnn.com](https://edition.cnn.com/2020/07/21/investing/united-airlines-earnings-covid/index.html)
 
 ### Media
-* Background image was downloaded from [Shutterstock](https://www.shutterstock.com/), a stock image library.
+* Images were downloaded from [Shutterstock](https://www.shutterstock.com/), [Pexels](https://www.pexels.com/), [Unsplash](https://unsplash.com/) and other royalty free image libraries.
 * All the icons used come from [Font Awesome](https://fontawesome.com/), an free icon library.
-Images were resized to fit the website design and to reduce website loading time.
+* Navbar hover effect was downloaded from [Hover.css](https://ianlunn.github.io/Hover/) library.
 
 ### Acknowledgements
-CSS flip card effect was created based on the YouTube video tutorial and adjusted to meet the game requirements [YouTube](https://www.youtube.com/watch?v=Lc6wyl1KdOc).
+Following online tutorials were used as references while developing this project:
+* Python Flask Tutorial by Corey Schafer [youtube.com](https://www.youtube.com/watch?v=MwZwr5Tvyxo&list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH)
+* Creating a User Login System Using Python, Flask and MongoDB by Pretty Printed [youtube.com](https://www.youtube.com/watch?v=vVx1737auSE)
+* Save and Retrieve Files In a MongoDB With Flask-Pymongo by Pretty Printed [youtube.com](https://www.youtube.com/watch?v=DsgAuceHha4)
 
-All used icons come from [Font Awesome](https://fontawesome.com/) version 5.13.0. Icons were collected from [Font Awesome Free Icon Library](https://fontawesome.com/icons?d=gallery&m=free) via console using following function
+Other references used:
+* The Ultimate Flask Course by Anthony Herbert (available on packtpub.com)
+* Flask by Example by Gareth Dwyer (available on packtpub.com)
+* Mastering Flask Web Development - Second Edition by Daniel Gaspar, Jack Stouffer (available on packtpub.com)
+* [stackoverflow.com](https://stackoverflow.com/)
+* Code Institute Slack
+* Code Institute Tutor Support
 
-    `function collectIcons() {
-        var linkarray = []; 
-        for (let i=0; i < document.getElementsByTagName("i").length; i++) {
-            linkarray.push(document.getElementsByTagName("i")[i].outerHTML
-            )}; 
-        copy(linkarray);
-    }`
-
-which copied all the "i" html elements of displayed icons to the clipboard, which was then copied to Notepad++ and strings were cleaned.
-
-JavaScript and user story testing was conducted using [Jasmine](https://jasmine.github.io/) and [Jasmine jQuery](https://github.com/velesin/jasmine-jquery) testing frameworks.
 
 **This website was developed for educational purposes only** 
