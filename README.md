@@ -3,6 +3,8 @@ Code Institute - Third Milestone Project: Data Centric Development
 
 The blogging application was developed for authors wanting to share their opinions and experience from the field of civil aviation, and for the readers craving for the latest aviation news.
 
+Note: Due to GitHub markdown format limitations, use right click to open files in new tab/window.
+
 ## Demo
 A live demo of the website has been developed [here](http://fly-high-blog.herokuapp.com/).
 
@@ -260,9 +262,6 @@ Other references used:
 * [stackoverflow.com](https://stackoverflow.com/)
 * Code Institute Slack
 * Code Institute Tutor Support
-
-### Test link
-<a href="http://www.google.com" target="_blank">Launch Google in a new window</a>
 
 
 **This website was developed for educational purposes only** 
