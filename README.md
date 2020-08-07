@@ -117,7 +117,49 @@ In order to achieve a positive user experience principles for minimalistic and d
 Demonstration of CRUD (Create, Read, Update and Delete) functionalities at the level of blog posts while applying basic business logic (i.e. user managment). 
 
 ### Skeleton
-[Website wireframe](https://github.com/milan-stefanik/FlyHigh/blob/master/readme/Wireframe.pdf){:target="_blank"}
+[Website wireframe](https://github.com/milan-stefanik/FlyHigh/blob/master/readme/Wireframe.pdf)
 
 ### Surface
 Greyscale color scheme.
+
+## Technologies
+
+### Front-end
+1. HTML
+1. CSS
+1. Bootstrap
+
+### Back-end
+1. MongoDB
+1. Python
+1. Flask
+1. Flask Blueprint
+1. Flask Pymongo
+1. Flask WTF
+1. Flask Mail
+1. Flask Paginate
+1. Jinja Templates
+1. Pillow
+1. Werkzeug Security
+1. itsdangerous TimedJSONWebSignatureSerializer
+1. BSON
+
+## Database architecture
+
+![Database Architecture](https://github.com/milan-stefanik/FlyHigh/blob/master/readme/database_structure.jpg "Database Architecture")
+
+## Features
+* Interactive design
+* Responsive design
+* Flask Blueprint powered application modularity
+* MongoDB powered back-end
+* Comprehensive User managment
+* User accounts CRU functions
+* Blog posts CRUD functions
+* Password reset via e-mail
+* Storing pictures as binary data in MongoDB
+* Custom error pages
+* User alerts
+* Functionalities for maintaining data consistency in database and optimizing database size (e.g. when updating profile image, the old image is deleted from the database before the new one is uploaded)
+* Resizing pictures before upload to database to optimize performance
+
