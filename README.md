@@ -6,6 +6,7 @@ The blogging application was developed for authors wanting to share their opinio
 ## Demo
 A live demo of the website has been developed  [here](http://fly-high-blog.herokuapp.com/).
 
-![Responsive Web Demo](https://github.com/milan-stefanik/FlyHigh/blob/master/readme/images/demo.gif "Responsive Web Demo")
+![Responsive Web Demo](https://github.com/milan-stefanik/FlyHigh/blob/master/readme/demo.gif "Responsive Web Demo")
+
 
 Responsive Web Demo GIF image was recorded using [Am I Responsive?](http://ami.responsivedesign.is) website. 
