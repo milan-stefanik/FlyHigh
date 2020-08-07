@@ -103,6 +103,21 @@ Responsive Web Demo GIF image was recorded using [Am I Responsive?](http://ami.r
 
 ![User Alert Example 4](https://github.com/milan-stefanik/FlyHigh/blob/master/readme/alert-example4.jpg "User Alert Example 4")
 
-#### Error Pages (Example)
+##### Error Pages (Example)
 
 ![Error Page Example](https://github.com/milan-stefanik/FlyHigh/blob/master/readme/error-page.jpg "Error Page Example")
+
+### Strategy
+
+The FlyHigh blogging application was designed while keeping both computer and mobile devices users in mind. 
+In order to achieve a positive user experience principles for minimalistic and defensive web design were applied.
+
+### Scope
+
+Demonstration of CRUD (Create, Read, Update and Delete) functionalities at the level of blog posts while applying basic business logic (i.e. user managment). 
+
+### Skeleton
+[Website wireframe](https://github.com/milan-stefanik/FlyHigh/blob/master/readme/Wireframe.pdf){:target="_blank"}
+
+### Surface
+Greyscale color scheme.
