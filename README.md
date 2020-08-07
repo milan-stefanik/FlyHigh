@@ -3,7 +3,7 @@ Code Institute - Third Milestone Project: Data Centric Development
 
 The blogging application was developed for authors wanting to share their opinions and experience from the field of civil aviation, and for the readers craving for the latest aviation news.
 
-Note: Due to GitHub markdown format limitations, use right click to open files in new tab/window.
+Note: Due to GitHub markdown format limitations, use right click to open links/files listed in this README file in new browser tab/window.
 
 ## Demo
 A live demo of the website has been developed [here](http://fly-high-blog.herokuapp.com/).
@@ -43,7 +43,7 @@ Responsive Web Demo GIF image was recorded using [Am I Responsive?](http://ami.r
 * User can filter posts by author (either through links in navigation bar or by clicking on post's author name).
 * User cannot register (in an attempt to open registration form, authenticated user is redirected to home page).
 * User cannot log in (in an attempt to open registration form, authenticated user is redirected to home page).
-* User can logout and thus become registerd but unauthenticated user.
+* User can logout and thus become registered but unauthenticated user.
 * User can update own user information and change own profile image.
 * User cannot update user information and change profile image of other users.
 * User cannot request password reset (in an attempt to do so, user would be redirected to home page).
@@ -155,7 +155,7 @@ Greyscale color scheme.
 ## Features
 * Interactive design
 * Responsive design
-* Post list pagination
+* Posts list pagination
 * Flask Blueprint powered application modularity
 * MongoDB powered back-end
 * Comprehensive User management
@@ -165,7 +165,8 @@ Greyscale color scheme.
 * Storing pictures as binary data in MongoDB
 * Custom error pages
 * User alerts
-* Functionalities for maintaining data consistency in database and optimizing database size (e.g. when updating profile image, the old image is deleted from the database before the new one is uploaded; when deleting posts, all linked data is deleted as well)
+* When unauthenticated user tries to access restricted page, he/she is redirected to Login Page. After successful login, user is automatically redirected to restricted page he/she intended to visit.
+* Functionalities for maintaining data consistency in database and optimizing database size (e.g. required fiels in the forms, information validity checks in forms, update/delete cascading)
 * Resizing pictures before upload to database to optimize performance
 
 ## Testing
@@ -180,12 +181,13 @@ Greyscale color scheme.
 
 ### User stories
 * During development process, each implemented functionality was tested individually
-* Overall application function was tested manually following the particular user stories
+* Overall application function was tested manually following the particular user stories desrcribed hereinbefore
 
 #### Discovered bugs and drawbacks
 * During testing in the GitPod, sending password reset e-mails did not work. After investigation, it was discovered that GitPod is blocking this function. Deployed version worked correctly.
 * There was a problem with displaying author's name in the posts. The problem was solved by converting MongoDB object to list of dictionaries.
 * Flask-Login powered user manamement did not work properly with PyMongo. The problem was solved by implementation of Flask Session based user managment instead of using Flask-Login.
+* Bcrypt did not work (hashed password check did not work), werkzeug.security tools for password hashing and checking hashed password used instead.
 
 ### Data consistency in database
 * Data stored in database were checked manually after every change through application user interface to assure data quality and consistency.
