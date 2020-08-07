@@ -138,6 +138,7 @@ Greyscale color scheme.
 1. Flask WTF
 1. Flask Mail
 1. Flask Paginate
+1. Flask Session
 1. Jinja Templates
 1. Pillow
 1. Werkzeug Security
@@ -160,6 +161,84 @@ Greyscale color scheme.
 * Storing pictures as binary data in MongoDB
 * Custom error pages
 * User alerts
-* Functionalities for maintaining data consistency in database and optimizing database size (e.g. when updating profile image, the old image is deleted from the database before the new one is uploaded)
+* Functionalities for maintaining data consistency in database and optimizing database size (e.g. when updating profile image, the old image is deleted from the database before the new one is uploaded; when deleting posts, all linked data is deleted as well)
 * Resizing pictures before upload to database to optimize performance
 
+## Testing
+
+### Code validity
+* HTML was tested via W3C Markup Validation Service
+* CSS was tested via W3C CSS Validation Service
+* Python code was thoroughly reviewed when implemeting application modularity using Flask Blueprint
+
+#### Discovered bugs and drawbacks
+* W3C Using Markup Validation Service is not practical for testing Jinja templates. 
+
+### User stories
+* During development process, each implemented functionality was tested individually
+* Overall application function was tested manually following the particular user stories
+
+#### Discovered bugs and drawbacks
+* During testing in the GitPod, sending password reset e-mails did not work. After investigation, it was discovered that GitPod is blocking this function. Deployed version worked correctly.
+* There was a problem with displaying author's name in the posts. The problem was solved by converting MongoDB object to list of dictionaries.
+* Flask-Login powered user manamement did not work properly with PyMongo. The problem was solved by implementation of Flask Session based user managment instead of using Flask-Login.
+
+
+### Browsers and devices
+* Responsiveness  has been tested using Inspect feature of Chrome and also on [Am I Responsive?](http://ami.responsivedesign.is) website.
+* Website has been tested on iPhone XS plus using Chrome and Safari browsers. Other mobile devices screen sizes were emulated via Chrome Inspect feature.
+* Website has been tested on multiple browsers in Windows (Chrome, Opera, Edge, Firefox) and multiple browsers in MacOs (Safari and Chrome). Firefox had problems with flip card css feature, the problem has been solved. Game does not support Internet Explorer. 
+
+#### Discovered bugs and drawbacks
+* Post content is saved to MongoDB as string. To display post pararagraps as defined by the author, CSS property "white-space: break-spaces" is used. Then the text is justified using "text-align" and "text-align-last" properties. The text-alignment is correctly displayed in all browsers with exception of MacOs Safari and iOS Safari and Chrome. In these browsers, text is aligned to left.
+* CSS property "text-overflow: ellipsis" did not work properly on iOS devices (this feature was intended to be used for displaying list of posts). Problem was solved by implementation of text fading effect.
+
+## Deployment
+The website is hosted on Heroku pages and can be accessed via this [link](http://fly-high-blog.herokuapp.com/). Heroku application is directly connected with the GitHub repository and automatic deploys are enabled. All changes are automatically reflected in production after each push to GitHub.
+
+In order to make sure the deployed application works correctly:
+* Config Variables in Heroku app needs to be properly set and kept up-to-date
+* Correct Procfile needs to be in GitHub repository refering to app.py
+* Requirements.txt file needs to be kept up-to-date listing all the required python packages
+* Debug mode in app.py needs to be switched off (i.e. debug=False) in app.py
+* env.py containg required secrets needs to be included in .gitignore file so as the secrets are not exposed
+
+
+## Credits
+
+### Content
+The listed posts are only for demonstration purposes and were copied from following sources:
+* Air NZ swaps landing slots with United Airlines at Heathrow in secret deal [www.stuff.co.nz](https://www.stuff.co.nz/business/industries/122286760/air-nz-swaps-landing-slots-with-united-airlines-at-heathrow-in-secret-deal)
+* Airbus trims A350 output, quarterly loss worse than expected [www.reuters.com](https://www.reuters.com/article/us-airbus-results/airbus-trims-a350-output-amid-larger-than-expected-second-quarter-loss-idUSKCN24V0II)
+* JetBlue CEO warns of ‘day of reckoning’ for airlines as coronavirus continues to devastate demand [www.cnbc.com](https://www.cnbc.com/2020/07/29/jetblue-ceo-robin-hayes-government-aid-for-airlines-will-save-jobs.html?&qsearchterm=airlines)
+* Boeing CEO ‘hopeful’ aircraft demand starts to recover in second half of 2021 [www.cnbc.com](https://www.cnbc.com/2020/07/29/boeing-ceo-hopeful-aircraft-demand-starts-to-recover-in-second-half-of-2021.html?&qsearchterm=airlines)
+* Air cargo recovery continues to creep forward in June [asiacargobuzz.com](https://asiacargobuzz.com/2020/07/29/air-cargo-recovery-continues-to-creep-forward-in-june/)
+* British Airways offers £1 flights to Europe under loyalty scheme as airlines fight decline in demand [uk.news.yahoo.com](https://uk.news.yahoo.com/british-airways-offers-1-flights-212111528.html)
+* Rise in domestic travel helps smaller airlines [www.koreaherald.com](http://www.koreaherald.com/view.php?ud=20200728000676)
+* Copa Airlines aims to restart operations in early September [www.reuters.com](https://www.reuters.com/article/us-copa-holdings-panama/copa-airlines-aims-to-restart-operations-in-early-september-idUSKCN24T07J)
+* Portugal's TAP aims to resume 40 pct of flights in September [www.xinhuanet.com](http://www.xinhuanet.com/english/2020-07/27/c_139244244.htm)
+* Passengers of Air France flights to Bengaluru to undergo COVID-19 test [in.news.yahoo.com](https://in.news.yahoo.com/passengers-air-france-flights-bengaluru-undergo-covid-19-090412703.html)
+
+### Media
+* Background image was downloaded from [Shutterstock](https://www.shutterstock.com/), a stock image library.
+* All the icons used come from [Font Awesome](https://fontawesome.com/), an free icon library.
+Images were resized to fit the website design and to reduce website loading time.
+
+### Acknowledgements
+CSS flip card effect was created based on the YouTube video tutorial and adjusted to meet the game requirements [YouTube](https://www.youtube.com/watch?v=Lc6wyl1KdOc).
+
+All used icons come from [Font Awesome](https://fontawesome.com/) version 5.13.0. Icons were collected from [Font Awesome Free Icon Library](https://fontawesome.com/icons?d=gallery&m=free) via console using following function
+
+    `function collectIcons() {
+        var linkarray = []; 
+        for (let i=0; i < document.getElementsByTagName("i").length; i++) {
+            linkarray.push(document.getElementsByTagName("i")[i].outerHTML
+            )}; 
+        copy(linkarray);
+    }`
+
+which copied all the "i" html elements of displayed icons to the clipboard, which was then copied to Notepad++ and strings were cleaned.
+
+JavaScript and user story testing was conducted using [Jasmine](https://jasmine.github.io/) and [Jasmine jQuery](https://github.com/velesin/jasmine-jquery) testing frameworks.
+
+**This website was developed for educational purposes only** 
