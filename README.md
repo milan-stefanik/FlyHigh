@@ -155,6 +155,7 @@ Greyscale color scheme.
 ## Features
 * Interactive design
 * Responsive design
+* Post list pagination
 * Flask Blueprint powered application modularity
 * MongoDB powered back-end
 * Comprehensive User management
